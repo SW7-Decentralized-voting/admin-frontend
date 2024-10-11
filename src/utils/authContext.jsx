@@ -1,14 +1,8 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useState } from 'react';
+import PropTypes from 'prop-types';
 
-// Create the AuthContext
 const AuthContext = createContext(null);
 
-// Custom hook to use AuthContext
-export function useAuth() {
-  return useContext(AuthContext);
-}
-
-// Provider to wrap the App component
 export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Default state
 
@@ -26,3 +20,10 @@ export function AuthProvider({ children }) {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
+
+// Add PropTypes validation for children
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+export default AuthContext;

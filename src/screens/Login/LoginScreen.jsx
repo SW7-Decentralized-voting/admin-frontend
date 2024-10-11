@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../utils/authContext';
+import { useAuth } from '../../utils/useAuth';
 import './LoginScreen.css';
 
 function LoginScreen() {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './CandidatesScreen.css';
 
 function CandidatesScreen() {
@@ -8,9 +8,8 @@ function CandidatesScreen() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const candidateData = { name, party, constituency };
-    console.log(candidateData); // Here, you can add logic to handle the submitted data
-    
+    // const candidateData = { name, party, constituency };
+
     // Clear the form after submission
     setName('');
     setParty('');
