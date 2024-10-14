@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_ADMIN_BE_URL,
+    baseURL: import.meta.env.VITE_API_URL,
 });
 
 const getPartyCandidates = async (partyId) => {
@@ -16,7 +16,7 @@ const getParties = async () => {
 
 const startElection = async () => {
     console.log(api);
-    const response = await api.post('/start');
+    const response = await api.post('/api/v1/election/start');
 
     return response.data
 }
