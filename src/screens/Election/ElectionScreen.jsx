@@ -16,7 +16,7 @@ const ElectionPhases = {
 function ElectionScreen() {
   const navigate = useNavigate();
   const [electionState, setElectionState] = useState(ElectionPhases.NOT_STARTED);
-  const [voterCount, setVoterCount] = useState(3); // New state for voter count
+  const [voterCount, setVoterCount] = useState(0); // New state for voter count
 
   // Function to handle the phase transitions
   const handleStartElection = async () => {
