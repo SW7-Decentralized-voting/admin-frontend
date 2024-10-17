@@ -1,6 +1,7 @@
 import './ElectionScreen.css';
 import { useState } from 'react';
 import { startElection } from '../../API/VotingAPI';
+import { toast } from 'react-hot-toast';
 
 
 const ElectionPhases = {
@@ -19,13 +20,14 @@ function ElectionScreen() {
     if (electionState === ElectionPhases.NOT_STARTED) {
       try {
         // Call startElection API when starting the election
-        const result = await startElection();
-        console.log('Election started:', result);
-
+        await startElection(3);
+  
         // Move to the REGISTRATION phase if the API call succeeds
         setElectionState(ElectionPhases.REGISTRATION);
+        
+        toast.success('Election has started successfully!');
       } catch (error) {
-        console.error('Error starting the election:', error);
+        toast.error('Failed to start the election. Please try again.');
       }
     } else {
       // Handle other phase transitions as before

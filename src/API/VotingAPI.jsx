@@ -2,6 +2,9 @@ import axios from 'axios';
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
+    headers: {
+        'Authorization': import.meta.env.VITE_API_TOKEN,
+    },
 });
 
 const getPartyCandidates = async (partyId) => {
@@ -14,11 +17,13 @@ const getParties = async () => {
     return response.data;
 };
 
-const startElection = async () => {
-    console.log(api);
-    const response = await api.post('/api/v1/election/start');
-
-    return response.data
+const startElection = async (voterCount) => {
+    try {
+        const response = await api.post('/api/v1/election/start', { voterCount });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
 }
 
 export { getPartyCandidates, getParties, startElection};
