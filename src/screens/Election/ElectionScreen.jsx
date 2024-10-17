@@ -3,15 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { startElection } from '../../API/VotingAPI';
 import { toast } from 'react-hot-toast';
-import { FaHourglassStart, FaUserPlus, FaVoteYea, FaChartLine, FaCheckCircle } from 'react-icons/fa'; // Importing icons
-
-const ElectionPhases = {
-  NOT_STARTED: 'NOT_STARTED',
-  REGISTRATION: 'REGISTRATION',
-  VOTING: 'VOTING',
-  TALLYING: 'TALLYING',
-  COMPLETED: 'COMPLETED',
-};
+import { electionPhaseDetails, ElectionPhases } from './electionPhaseDetails';
 
 function ElectionScreen() {
   const navigate = useNavigate();
@@ -65,74 +57,18 @@ function ElectionScreen() {
     }
   };
 
-  // Function to get the corresponding icon based on the election phase
-  const getPhaseIcon = () => {
-    switch (electionState) {
-      case ElectionPhases.NOT_STARTED:
-        return <FaHourglassStart />;
-      case ElectionPhases.REGISTRATION:
-        return <FaUserPlus />;
-      case ElectionPhases.VOTING:
-        return <FaVoteYea />;
-      case ElectionPhases.TALLYING:
-        return <FaChartLine />;
-      case ElectionPhases.COMPLETED:
-        return <FaCheckCircle />;
-      default:
-        return null;
-    }
-  };
-
-  // Function to get the corresponding color based on the election phase
-  const getPhaseColor = () => {
-    switch (electionState) {
-      case ElectionPhases.NOT_STARTED:
-        return '#6c757d'; // Gray
-      case ElectionPhases.REGISTRATION:
-        return '#007bff'; // Blue
-      case ElectionPhases.VOTING:
-        return '#ffc107'; // Yellow
-      case ElectionPhases.TALLYING:
-        return '#17a2b8'; // Teal
-      case ElectionPhases.COMPLETED:
-        return '#28a745'; // Green
-      default:
-        return '#6c757d';
-    }
-  };
-
-  // Display the current phase in the status bar
+  // Consolidated function to render the status bar
   const renderStatusBar = () => {
-    let statusText = '';
-    switch (electionState) {
-      case ElectionPhases.NOT_STARTED:
-        statusText = 'Election not started.';
-        break;
-      case ElectionPhases.REGISTRATION:
-        statusText = 'Registration is ongoing.';
-        break;
-      case ElectionPhases.VOTING:
-        statusText = 'Voting is in progress.';
-        break;
-      case ElectionPhases.TALLYING:
-        statusText = 'Tallying votes.';
-        break;
-      case ElectionPhases.COMPLETED:
-        statusText = 'Election completed.';
-        break;
-      default:
-        statusText = '';
-        break;
-    }
+    const { text, icon, color } = electionPhaseDetails[electionState] || {};
 
     return (
       <div 
         className="status-bar" 
-        style={{ backgroundColor: getPhaseColor() }}
+        style={{ backgroundColor: color }}
       >
         <div className="status-content">
-          <span className="status-icon">{getPhaseIcon()}</span>
-          <span className="status-text">{statusText}</span>
+          <span className="status-icon">{icon}</span>
+          <span className="status-text">{text}</span>
         </div>
       </div>
     );
