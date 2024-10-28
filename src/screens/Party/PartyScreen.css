@@ -1,9 +1,9 @@
-.candidates-container {
+.party-container {
   padding: 1.25rem;
   text-align: center;
 }
 
-.candidate-form {
+.party-form {
   margin-top: 1.25rem;
   display: flex;
   flex-direction: column;

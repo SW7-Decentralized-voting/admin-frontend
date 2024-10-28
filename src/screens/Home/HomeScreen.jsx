@@ -14,6 +14,9 @@ function HomeScreen() {
         <button onClick={() => navigate('/election')} className="home-button">
           Election Status
         </button>
+        <button onClick={() => navigate('/party')} className="home-button">
+          Add Party
+        </button>
       </div>
     </div>
   );

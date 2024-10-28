@@ -5,6 +5,7 @@ import LoginScreen from './screens/Login/LoginScreen';
 import HomeScreen from './screens/Home/HomeScreen';
 import ElectionScreen from './screens/Election/ElectionScreen';
 import CandidatesScreen from './screens/Candidates/CandidatesScreen';
+import PartyScreen from './screens/Party/PartyScreen';
 import { AuthProvider } from './utils/authContext';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/home" element={<ProtectedRoute> <HomeScreen /> </ProtectedRoute>}/>
         <Route path="/election" element={<ProtectedRoute> <ElectionScreen /> </ProtectedRoute>}/>
         <Route path="/candidates" element={<ProtectedRoute> <CandidatesScreen /> </ProtectedRoute>}/>
+        <Route path="/party" element={<ProtectedRoute> <PartyScreen /> </ProtectedRoute>}/>
       </Routes>
     </AuthProvider>
   );
