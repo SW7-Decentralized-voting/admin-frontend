@@ -18,12 +18,8 @@ const getParties = async () => {
 };
 
 const startElection = async (voterCount) => {
-    try {
-        const response = await api.post('/api/v1/election/start', { voterCount });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
-}
+    const response = await api.post('/api/v1/election/start', { voterCount });
+    return response.data;
+};
 
 export { getPartyCandidates, getParties, startElection};

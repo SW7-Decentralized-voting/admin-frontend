@@ -22,7 +22,7 @@ function ElectionScreen() {
         
         toast.success('Election has started successfully!');
       } catch (error) {
-        toast.error('Failed to start the election. Please try again.');
+        toast.error(error);
       }
     } else {
       // Handle other phase transitions as before
