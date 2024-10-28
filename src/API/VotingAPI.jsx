@@ -22,9 +22,14 @@ const addParty = async (partyData) => {
     return response.data;
 };
 
+const addCandidate = async (candidateData) => {
+    const response = await api.post('/candidates', candidateData);
+    return response.data;
+};
+
 const startElection = async (voterCount) => {
     const response = await api.post('/election/start', { voterCount });
     return response.data;
 };
 
-export { getPartyCandidates, getParties, addParty, startElection};
+export { getPartyCandidates, getParties, addParty, addCandidate, startElection};

@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
-import { getParties } from '../../API/VotingAPI';
+import { useNavigate } from 'react-router-dom';
+import { getParties, addCandidate } from '../../API/VotingAPI';
+import { toast } from 'react-hot-toast';
 import './CandidatesScreen.css';
 
 function CandidatesScreen() {
+  const navigate = useNavigate();
   const [name, setName] = useState('');
   const [party, setParty] = useState('');
   const [constituency, setConstituency] = useState('');
@@ -14,13 +17,27 @@ function CandidatesScreen() {
     });
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // const candidateData = { name, party, constituency };
 
-    setName('');
-    setParty('');
-    setConstituency('');
+    const candidateData = {
+      name,
+      party,
+      nominationDistrict: constituency || '671f650ff49f447b568ab412',
+    };
+
+    try {
+      await addCandidate(candidateData);
+      setName('');
+      setParty('');
+      setConstituency('');
+      toast.success('Candidate added successfully!');
+      navigate('/home');
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err);
+      toast.error(err.response?.data?.error || 'An error occurred');
+    }
   };
 
   return (
@@ -47,7 +64,7 @@ function CandidatesScreen() {
           >
             <option value="">Select Party</option>
             {parties.map((partyObj) => (
-              <option key={partyObj._id} value={partyObj.list}>
+              <option key={partyObj._id} value={partyObj._id}>
                 {partyObj.name}
               </option>
             ))}
