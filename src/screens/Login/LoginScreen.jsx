@@ -29,7 +29,7 @@ function LoginScreen() {
     <div className="login-container">
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
-        <div className="form-group">
+        <div className="form-group-login">
           <label htmlFor="password">Password:</label>
           <input
             type="password"

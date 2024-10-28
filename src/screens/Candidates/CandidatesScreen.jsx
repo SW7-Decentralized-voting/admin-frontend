@@ -1,16 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getParties } from '../../API/VotingAPI';
 import './CandidatesScreen.css';
 
 function CandidatesScreen() {
   const [name, setName] = useState('');
   const [party, setParty] = useState('');
   const [constituency, setConstituency] = useState('');
+  const [parties, setParties] = useState([]);
+
+  useEffect(() => {
+    getParties().then((fetchedParties) => {
+      setParties(fetchedParties);
+    });
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // const candidateData = { name, party, constituency };
 
-    // Clear the form after submission
     setName('');
     setParty('');
     setConstituency('');
@@ -39,9 +46,11 @@ function CandidatesScreen() {
             required
           >
             <option value="">Select Party</option>
-            <option value="Party A">Party A</option>
-            <option value="Party B">Party B</option>
-            <option value="Party C">Party C</option>
+            {parties.map((partyObj) => (
+              <option key={partyObj._id} value={partyObj.list}>
+                {partyObj.name}
+              </option>
+            ))}
           </select>
         </div>
         <div className="form-group">

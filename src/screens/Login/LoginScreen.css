@@ -11,8 +11,9 @@ h2 {
   text-align: center;
 }
 
-.form-group {
+.form-group-login {
   margin-bottom: 15px;
+  width: 100%;
 }
 
 label {
