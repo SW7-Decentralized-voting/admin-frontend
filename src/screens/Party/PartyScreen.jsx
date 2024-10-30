@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { addParty } from '../../API/VotingAPI';
 import { toast } from 'react-hot-toast';
+import { FaArrowLeft } from 'react-icons/fa';
 import './PartyScreen.css';
 
 function PartyScreen() {
@@ -39,6 +40,9 @@ function PartyScreen() {
 
   return (
     <div className="party-container">
+      <button className="back-button" onClick={() => navigate('/home')}>
+        <FaArrowLeft /> Back
+      </button>
       <h1>Add a Party</h1>
       <form onSubmit={handleSubmit} className="party-form">
         <div className="form-group">

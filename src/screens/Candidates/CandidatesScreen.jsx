@@ -1,19 +1,27 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getParties, addCandidate } from '../../API/VotingAPI';
+import { getParties, getNominationDistricts, addCandidate } from '../../API/VotingAPI';
 import { toast } from 'react-hot-toast';
+import { FaArrowLeft } from 'react-icons/fa'; // Import the arrow icon
 import './CandidatesScreen.css';
 
 function CandidatesScreen() {
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [party, setParty] = useState('');
-  const [constituency, setConstituency] = useState('');
+  const [nominationDistrict, setNominationDistrict] = useState('');
   const [parties, setParties] = useState([]);
+  const [nominationDistricts, setNominationDistricts] = useState([]);
 
   useEffect(() => {
     getParties().then((fetchedParties) => {
       setParties(fetchedParties);
+    });
+
+    getNominationDistricts().then((nominationDistricts) => {
+      if (nominationDistricts.length > 0) {
+        setNominationDistricts(nominationDistricts);
+      }
     });
   }, []);
 
@@ -23,18 +31,17 @@ function CandidatesScreen() {
     const candidateData = {
       name,
       party,
-      nominationDistrict: constituency || '671f650ff49f447b568ab412',
+      nominationDistrict: nominationDistrict || '671f650ff49f447b568ab412',
     };
 
     try {
       await addCandidate(candidateData);
       setName('');
       setParty('');
-      setConstituency('');
+      setNominationDistrict('');
       toast.success('Candidate added successfully!');
       navigate('/home');
     } catch (err) {
-      // eslint-disable-next-line no-console
       console.error(err);
       toast.error(err.response?.data?.error || 'An error occurred');
     }
@@ -42,6 +49,10 @@ function CandidatesScreen() {
 
   return (
     <div className="candidates-container">
+      <button className="back-button" onClick={() => navigate('/home')}>
+        <FaArrowLeft /> Back
+      </button>
+
       <h1>Add a Candidate</h1>
       <form onSubmit={handleSubmit} className="candidate-form">
         <div className="form-group">
@@ -71,13 +82,19 @@ function CandidatesScreen() {
           </select>
         </div>
         <div className="form-group">
-          <label htmlFor="constituency">Constituency (optional):</label>
-          <input
-            type="text"
-            id="constituency"
-            value={constituency}
-            onChange={(e) => setConstituency(e.target.value)}
-          />
+          <label htmlFor="nominationDistrict">Nomination District:</label>
+          <select
+            id="nominationDistrict"
+            value={nominationDistrict}
+            onChange={(e) => setNominationDistrict(e.target.value)}
+          >
+            <option value="">Select Nomination District</option>
+            {nominationDistricts.map((district) => (
+              <option key={district._id} value={district._id}>
+                {district.name}
+              </option>
+            ))}
+          </select>
         </div>
         <button type="submit" className="submit-button">Add Candidate</button>
       </form>

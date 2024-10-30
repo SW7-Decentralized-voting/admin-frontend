@@ -12,6 +12,11 @@ const getPartyCandidates = async (partyId) => {
     return response.data;
 };
 
+const getNominationDistricts = async () => {
+    const response = await api.get('/nominationDistricts');
+    return response.data;
+};
+
 const getParties = async () => {
     const response = await api.get('/parties');
     return response.data;
@@ -32,4 +37,4 @@ const startElection = async (voterCount) => {
     return response.data;
 };
 
-export { getPartyCandidates, getParties, addParty, addCandidate, startElection};
+export { getPartyCandidates, getParties, getNominationDistricts, addParty, addCandidate, startElection};

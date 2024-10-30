@@ -78,10 +78,8 @@ function ElectionScreen() {
     <div className="election-container">
       <h1>Election Status</h1>
       
-      {/* Status Bar */}
       {renderStatusBar()}
 
-      {/* Voter Count Input */}
       {electionState === ElectionPhases.NOT_STARTED && (
         <div className="input-group">
           <label htmlFor="voterCount">Number of Voters:</label>
@@ -97,14 +95,12 @@ function ElectionScreen() {
         </div>
       )}
 
-      {/* Start Election Button */}
       <div className="button-group">
         <button onClick={handleStartElection} className="election-button">
           {electionState === ElectionPhases.COMPLETED ? 'Restart Election' : 'Start Election'}
         </button>
       </div>
 
-      {/* Back to Home Button */}
       <div className="button-group">
         <button onClick={() => navigate('/home')} className="election-button">
           Back to Home
