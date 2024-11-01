@@ -31,7 +31,7 @@ function CandidatesScreen() {
     const candidateData = {
       name,
       party,
-      nominationDistrict: nominationDistrict || '671f650ff49f447b568ab412',
+      nominationDistrict,
     };
 
     try {
@@ -42,6 +42,7 @@ function CandidatesScreen() {
       toast.success('Candidate added successfully!');
       navigate('/home');
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err);
       toast.error(err.response?.data?.error || 'An error occurred');
     }
