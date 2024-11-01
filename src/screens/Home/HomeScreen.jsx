@@ -8,7 +8,7 @@ function HomeScreen() {
     <div className="home-container">
       <h1>Admin Dashboard</h1>
       <div className="button-group">
-        <button onClick={() => navigate('/candidates')} className="home-button">
+        <button onClick={() => navigate('/candidate')} className="home-button">
           Add Candidate
         </button>
         <button onClick={() => navigate('/election')} className="home-button">
@@ -16,6 +16,12 @@ function HomeScreen() {
         </button>
         <button onClick={() => navigate('/party')} className="home-button">
           Add Party
+        </button>
+        <button onClick={() => navigate('/nomination-district')} className="home-button">
+          Add Nomination District
+        </button>
+        <button onClick={() => navigate('/constituency')} className="home-button">
+          Add Constituency
         </button>
       </div>
     </div>

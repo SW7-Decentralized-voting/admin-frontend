@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { getParties, getNominationDistricts, addCandidate } from '../../API/VotingAPI';
 import { toast } from 'react-hot-toast';
 import { FaArrowLeft } from 'react-icons/fa'; // Import the arrow icon
-import './CandidatesScreen.css';
+import './CandidateScreen.css';
 
-function CandidatesScreen() {
+function CandidateScreen() {
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [party, setParty] = useState('');
@@ -103,4 +103,4 @@ function CandidatesScreen() {
   );
 }
 
-export default CandidatesScreen;
+export default CandidateScreen;

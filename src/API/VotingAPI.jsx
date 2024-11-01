@@ -17,6 +17,11 @@ const getNominationDistricts = async () => {
     return response.data;
 };
 
+const getConstituencies = async () => {
+    const response = await api.get('/constituencies');
+    return response.data;
+};
+
 const getParties = async () => {
     const response = await api.get('/parties');
     return response.data;
@@ -32,9 +37,28 @@ const addCandidate = async (candidateData) => {
     return response.data;
 };
 
+const addNominationDistrict = async (nominationDistrictData) => {
+    const response = await api.post('/nominationDistricts', nominationDistrictData);
+    return response.data;
+};
+
+const addConstituency = async (constituencyData) => {
+    const response = await api.post('/constituencies', constituencyData);
+    return response.data;
+};
+
 const startElection = async (voterCount) => {
     const response = await api.post('/election/start', { voterCount });
     return response.data;
 };
 
-export { getPartyCandidates, getParties, getNominationDistricts, addParty, addCandidate, startElection};
+export { getPartyCandidates,
+        getParties,
+        getNominationDistricts,
+        getConstituencies,
+        addParty,
+        addCandidate,
+        addNominationDistrict,
+        addConstituency,
+        startElection
+    };
