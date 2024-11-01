@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { addConstituency } from '../../API/VotingAPI';
+import { addConstituency } from '../../API';
 import { toast } from 'react-hot-toast';
 import { FaArrowLeft } from 'react-icons/fa';
 import './ConstituencyScreen.css';

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getConstituencies, addNominationDistrict } from '../../API/VotingAPI';
+import { getConstituencies, addNominationDistrict } from '../../API';
 import { toast } from 'react-hot-toast';
 import { FaArrowLeft } from 'react-icons/fa';
 import './NominationDistrictScreen.css';

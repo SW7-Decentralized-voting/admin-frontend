@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getParties, getNominationDistricts, addCandidate } from '../../API/VotingAPI';
+import { getParties, getNominationDistricts, addCandidate } from '../../API';
 import { toast } from 'react-hot-toast';
 import { FaArrowLeft } from 'react-icons/fa'; // Import the arrow icon
 import './CandidateScreen.css';

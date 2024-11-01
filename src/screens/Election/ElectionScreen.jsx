@@ -1,7 +1,7 @@
 import './ElectionScreen.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { startElection } from '../../API/VotingAPI';
+import { startElection } from '../../API';
 import { toast } from 'react-hot-toast';
 import { electionPhaseDetails, ElectionPhases } from './electionPhaseDetails';
 
