@@ -1,0 +1,24 @@
+/* HomeScreen.css */
+.home-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.button-group {
+  margin-top: 20px;
+}
+
+.home-button {
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.home-button:hover {
+  background-color: #0056b3;
+}
