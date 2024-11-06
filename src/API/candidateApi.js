@@ -21,3 +21,24 @@ export const addCandidate = async (candidateData) => {
     const response = await api.post('/candidates', candidateData);
     return response.data;
 };
+
+/**
+ * Delete a candidate
+ * @param {string} candidateId
+ * @returns {Promise<Object>}
+ */
+export const deleteCandidate = async (candidateId) => {
+    const response = await api.delete(`/candidates/${candidateId}`);
+    return response.data;
+};
+
+/**
+ * Update a candidate
+ * @param {string} candidateId
+ * @param {Object} candidateData
+ * @returns {Promise<Object>}
+ */
+export const updateCandidate = async (candidateId, candidateData) => {
+    const response = await api.patch(`/candidates/${candidateId}`, candidateData);
+    return response.data;
+};

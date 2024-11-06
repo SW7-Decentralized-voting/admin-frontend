@@ -20,3 +20,24 @@ export const addConstituency = async (constituencyData) => {
     const response = await api.post('/constituencies', constituencyData);
     return response.data;
 };
+
+/**
+ * Delete a constituency
+ * @param {string} constituencyId
+ * @returns {Promise<Object>}
+ */
+export const deleteConstituency = async (constituencyId) => {
+    const response = await api.delete(`/constituencies/${constituencyId}`);
+    return response.data;
+};
+
+/**
+ * Update a constituency
+ * @param {string} constituencyId
+ * @param {Object} constituencyData
+ * @returns {Promise<Object>}
+ */
+export const updateConstituency = async (constituencyId, constituencyData) => {
+    const response = await api.patch(`/constituencies/${constituencyId}`, constituencyData);
+    return response.data;
+};
