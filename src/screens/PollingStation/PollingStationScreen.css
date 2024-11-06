@@ -1,0 +1,47 @@
+
+.poll-container {
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.poll-form {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-group {
+  margin-bottom: 3rem;
+  width: 25%;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.3125rem;
+  font-size: 1rem;
+}
+
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 0.0625rem solid #ccc;
+  border-radius: 0.25rem;
+}
+
+.submit-button {
+  padding: 0.625rem 1.25rem;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.3125rem;
+  width: 25%;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}

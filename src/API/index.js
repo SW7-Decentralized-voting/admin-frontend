@@ -14,3 +14,6 @@ export * from './constituencyApi';
 
 // Election APIs
 export * from './electionApi';
+
+// Polling Station APIs
+export * from './pollingStationApi';

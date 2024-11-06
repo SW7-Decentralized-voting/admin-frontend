@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { startElection } from '../../API';
 import { toast } from 'react-hot-toast';
 import { electionPhaseDetails, ElectionPhases } from './electionPhaseDetails';
+import { FaArrowLeft } from 'react-icons/fa';
 
 function ElectionScreen() {
   const navigate = useNavigate();
@@ -76,6 +77,9 @@ function ElectionScreen() {
 
   return (
     <div className="election-container">
+      <button className="back-button" onClick={() => navigate('/home')}>
+        <FaArrowLeft /> Back
+      </button>
       <h1>Election Status</h1>
       
       {renderStatusBar()}
@@ -98,12 +102,6 @@ function ElectionScreen() {
       <div className="button-group">
         <button onClick={handleStartElection} className="election-button">
           {electionState === ElectionPhases.COMPLETED ? 'Restart Election' : 'Start Election'}
-        </button>
-      </div>
-
-      <div className="button-group">
-        <button onClick={() => navigate('/home')} className="election-button">
-          Back to Home
         </button>
       </div>
     </div>

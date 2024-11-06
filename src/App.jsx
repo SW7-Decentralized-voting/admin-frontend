@@ -8,6 +8,7 @@ import CandidateScreen from './screens/Candidate/CandidateScreen';
 import PartyScreen from './screens/Party/PartyScreen';
 import NominationDistrictScreen from './screens/NominationDistrict/NominationDistrictScreen';
 import ConstituencyScreen from './screens/Constituency/ConstituencyScreen';
+import PollingStationScreen from './screens/PollingStation/PollingStationScreen';
 import { AuthProvider } from './utils/authContext';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/party" element={<ProtectedRoute> <PartyScreen /> </ProtectedRoute>}/>
         <Route path="/nomination-district" element={<ProtectedRoute> <NominationDistrictScreen /> </ProtectedRoute>}/>
         <Route path="/constituency" element={<ProtectedRoute> <ConstituencyScreen /> </ProtectedRoute>}/>
+        <Route path="/polling-station" element={<ProtectedRoute> <PollingStationScreen /> </ProtectedRoute>}/>
       </Routes>
     </AuthProvider>
   );
