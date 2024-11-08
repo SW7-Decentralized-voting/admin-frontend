@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../utils/useAuth';
-import './LoginScreen.css';
 
 function LoginScreen() {
   const [password, setPassword] = useState('');
@@ -26,21 +25,28 @@ function LoginScreen() {
   };
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
+    <div className='flex flex-1 justify-center items-center w-full h-screen'>
       <form onSubmit={handleLogin}>
-        <div className="form-group-login">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+        <div className='card bg-primary text-primary-content w-96'>
+          <div className='card-body'>
+            <h2 className='card-title'>
+              Admin
+            </h2>
+            <label htmlFor='password' className='input input-bordered flex items-center gap-2'>
+              Password
+              <input
+                className='grow bg-white'
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </label>
+            {error && <p className='text-red-800'>{error}</p>}
+            <button className='btn' type='submit'>Login</button>
+          </div>
         </div>
-        {error && <p className="error-message">{error}</p>}
-        <button type="submit">Login</button>
       </form>
     </div>
   );

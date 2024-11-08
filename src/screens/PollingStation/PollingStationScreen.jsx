@@ -1,12 +1,9 @@
-import AddPollingStation from './addPollingStation';
-import ListPollingStations from './listPollingStations';
-import { useNavigate } from 'react-router-dom';
+import AddPollingStation from './AddPollingStation';
+import ListPollingStations from './ListPollingStations';
+import Header from '../Components/Header';
 import { useState } from 'react';
-import { FaArrowLeft } from 'react-icons/fa';
-import './PollingStationScreen.css';
 
 function PollingStationScreen() {
-  const navigate = useNavigate();
   const [refreshList, setRefreshList] = useState(false);
 
   const handlePollingStationAdded = () => {
@@ -14,12 +11,9 @@ function PollingStationScreen() {
   };
 
   return (
-    <div className='poll-container'>
-      <button className='back-button' onClick={() => navigate('/home')}>
-        <FaArrowLeft /> Back
-      </button>
-      <h1>Polling Station Management</h1>
-      <div className='polling-station-layout'>
+    <div className='flex flex-col w-screen h-screen align-center justify-center'>
+      <Header title='Polling Station' />
+      <div className='flex flex-row w-full space-x-4 items-center justify-center'>
         <AddPollingStation onPollingStationAdded={handlePollingStationAdded} />
         <ListPollingStations refresh={refreshList} />
       </div>
