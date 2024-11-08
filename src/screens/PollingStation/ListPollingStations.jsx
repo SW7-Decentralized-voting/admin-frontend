@@ -68,9 +68,8 @@ function ListPollingStations({ refresh }) {
   };
 
   return (
-    <div className="card bg-primary text-primary-content h-full">
-      <div className="card-body flex flex-col items-center justify-center max-h-full">
-        <h2 className="card-title text-center">List of Polling Stations</h2>
+    <div className="card bg-primary text-primary-content min-h-80 max-h-full overflow-auto">
+      <div className="card-body flex flex-col items-center justify-center">
         <div className='overflow-auto bg-secondary rounded-sm'>
           <table className="table table-zebra-zebra ">
             <thead>
