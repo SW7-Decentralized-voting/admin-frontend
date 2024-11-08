@@ -59,28 +59,53 @@ function ListPollingStations({ refresh }) {
   const handleSave = async (stationId, pollingStationData) => {
     setPollingStations((prevStations) =>
       prevStations.map((station) =>
-        station._id === stationId ? { ...station, ...pollingStationData } : station
+        station._id === stationId
+          ? { ...station, ...pollingStationData }
+          : station
       )
     );
   };
 
   return (
-    <div className="polling-stations-list">
-      <h2>List of Polling Stations</h2>
-      <ul>
-        {pollingStations.map((station) => (
-          <li key={station._id} className="station-item">
-            <span>
-              {station.name} - {station.nominationDistrictName} - Expected
-              Voters: {station.expectedVoters}
-            </span>
-            <div className="action-buttons">
-              <button onClick={() => openEditModal(station)}>Edit</button>
-              <button onClick={() => openDeleteModal(station)}>Delete</button>
-            </div>
-          </li>
-        ))}
-      </ul>
+    <div className="card bg-primary text-primary-content h-full">
+      <div className="card-body flex flex-col items-center justify-center max-h-full">
+        <h2 className="card-title text-center">List of Polling Stations</h2>
+        <div className='overflow-auto'>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Nomination District</th>
+                <th>Expected Voters</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {pollingStations.length === 0 && (
+                <tr>
+                  <td colSpan="4">No polling stations found.</td>
+                </tr>
+              )}
+              {pollingStations.map((station) => (
+                <tr key={station._id}>
+                  <td>{station.name}</td>
+                  <td>{station.nominationDistrict}</td>
+                  <td>{station.expectedVoters}</td>
+                  <td>
+                    <button onClick={() => openEditModal(station)}>Edit</button>
+                  </td>
+                  <td>
+                    <button onClick={() => openDeleteModal(station)}>
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
 
       <EditPollingStationModal
         isOpen={isEditModalOpen}

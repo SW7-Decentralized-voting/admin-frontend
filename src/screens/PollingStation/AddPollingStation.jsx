@@ -56,47 +56,61 @@ function AddPollingStation({ onPollingStationAdded }) {
   };
 
   return (
-    <div className="polling-stations-list">
-      <h2>Add a Polling Station</h2>
-      <form onSubmit={handleSubmit} className="poll-form">
-        <div className="form-group">
-          <label htmlFor="pollingStationName">Polling Station Name:</label>
-          <input
-            type="text"
-            id="pollingStationName"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="nom-district">Nomination District:</label>
-          <select
-            id="nom-district"
-            value={nominationDistrict}
-            onChange={(e) => setNominationDistrict(e.target.value)}
-          >
-            <option value="">Select Nomination District</option>
-            {nominationDistricts.map((district) => (
-              <option key={district._id} value={district._id}>
-                {district.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="form-group">
-          <label htmlFor="expectedVoters">Expected Voter Amount:</label>
-          <input
-            type="number"
-            min="1"
-            id="expectedVoters"
-            value={expectedVoters}
-            onChange={(e) => setExpectedVoters(e.target.value)}
-          />
-        </div>
-        <button type="submit" className="submit-button">
-          Add Polling Station
-        </button>
-      </form>
+    <div className="card bg-primary text-primary-content">
+      <div className="card-body flex flex-col items-center justify-center">
+        <h2 className="card-title text-center">Add a Polling Station</h2>
+        <form onSubmit={handleSubmit} className="w-full space-y-4">
+          <div className="form-control">
+            <label htmlFor="pollingStationName" className="label">
+              <span className="label-text">Polling Station Name</span>
+            </label>
+            <input
+              type="text"
+              id="pollingStationName"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="input input-bordered w-full"
+            />
+          </div>
+
+          <div className="form-control">
+            <label htmlFor="nom-district" className="label">
+              <span className="label-text">Nomination District</span>
+            </label>
+            <select
+              className="select select-bordered w-full"
+              id="nom-district"
+              value={nominationDistrict}
+              onChange={(e) => setNominationDistrict(e.target.value)}
+            >
+              <option disabled selected>Select Nomination District</option>
+              {nominationDistricts.map((district) => (
+                <option key={district._id} value={district._id}>
+                  {district.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="form-control">
+            <label htmlFor="expectedVoters" className="label">
+              <span className="label-text">Expected Voters</span>
+            </label>
+            <input
+              type="number"
+              min="1"
+              id="expectedVoters"
+              value={expectedVoters}
+              onChange={(e) => setExpectedVoters(e.target.value)}
+              className="input input-bordered w-full"
+            />
+          </div>
+
+          <button type="submit" className="btn btn-secondary w-full">
+            Add Polling Station
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

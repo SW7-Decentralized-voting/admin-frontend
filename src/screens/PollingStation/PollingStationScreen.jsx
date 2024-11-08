@@ -11,9 +11,9 @@ function PollingStationScreen() {
   };
 
   return (
-    <div className='flex flex-col w-screen h-screen align-center justify-center'>
-      <Header title='Polling Station' />
-      <div className='flex flex-row w-full space-x-4 items-center justify-center'>
+    <div className='flex flex-col w-full h-screen items-center justify-evenly'>
+      <Header title='Polling Station Management' />
+      <div className='flex flex-row justify-center items-start gap-4 h-4/5'>
         <AddPollingStation onPollingStationAdded={handlePollingStationAdded} />
         <ListPollingStations refresh={refreshList} />
       </div>

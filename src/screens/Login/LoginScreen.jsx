@@ -44,7 +44,7 @@ function LoginScreen() {
               />
             </label>
             {error && <p className='text-red-800'>{error}</p>}
-            <button className='btn' type='submit'>Login</button>
+            <button className='btn btn-secondary' type='submit'>Login</button>
           </div>
         </div>
       </form>
