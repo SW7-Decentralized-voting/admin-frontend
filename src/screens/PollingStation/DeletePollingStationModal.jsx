@@ -1,9 +1,6 @@
-import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 import { deletePollingStation } from '../../API';
 import { toast } from 'react-hot-toast';
-
-Modal.setAppElement('#root');
 
 function DeleteConfirmationModal({ isOpen, onRequestClose, station, onConfirm }) {
   const handleDelete = async () => {
@@ -20,14 +17,27 @@ function DeleteConfirmationModal({ isOpen, onRequestClose, station, onConfirm })
   };
 
   return (
-    <Modal isOpen={isOpen} onRequestClose={onRequestClose} contentLabel="Delete Confirmation">
-      <h2>Are you sure?</h2>
-      <p>Do you really want to delete the polling station <strong>{station?.name}</strong>?</p>
-      <button onClick={handleDelete}>Yes, Delete</button>
-      <button onClick={onRequestClose}>Cancel</button>
-    </Modal>
+    <>
+      {isOpen && (
+        <div className="modal modal-open">
+          <div className="modal-box">
+            <h2 className="text-2xl font-bold mb-4">Are you sure?</h2>
+            <p>Do you really want to delete <strong>{station?.name}</strong>?</p>
+            <div className="modal-action">
+              <button className="btn btn-warning" onClick={handleDelete}>
+                Yes, Delete
+              </button>
+              <button className="btn" onClick={onRequestClose}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
+
 DeleteConfirmationModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onRequestClose: PropTypes.func.isRequired,

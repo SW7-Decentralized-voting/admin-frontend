@@ -1,10 +1,7 @@
-import Modal from 'react-modal';
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import toast from 'react-hot-toast';
 import { getNominationDistricts, updatePollingStation } from '../../API';
-
-Modal.setAppElement('#root');
 
 function EditPollingStationModal({ isOpen, onRequestClose, station, onSave }) {
   const [name, setName] = useState('');
@@ -13,13 +10,13 @@ function EditPollingStationModal({ isOpen, onRequestClose, station, onSave }) {
   const [nominationDistricts, setNominationDistricts] = useState([]);
 
   useEffect(() => {
-    if (!isOpen) {
-      getNominationDistricts().then((districts) => {
-        if (districts.length > 0) {
-          setNominationDistricts(districts);
-        }
-      });
-    }
+    if (!isOpen) return;
+
+    getNominationDistricts().then((districts) => {
+      if (districts.length > 0) {
+        setNominationDistricts(districts);
+      }
+    });
   }, [isOpen]);
 
   useEffect(() => {
@@ -44,46 +41,80 @@ function EditPollingStationModal({ isOpen, onRequestClose, station, onSave }) {
       return;
     }
     try {
-      await updatePollingStation(station._id, { name, nominationDistrict, expectedVoters });
+      await updatePollingStation(station._id, {
+        name,
+        nominationDistrict,
+        expectedVoters,
+      });
       toast.success('Polling station updated successfully!');
       onSave(station._id, { name, nominationDistrict, expectedVoters });
       onRequestClose();
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
-      toast.error('Failed to add polling station. Please try again.');
+      toast.error('Failed to update polling station. Please try again.');
     }
   };
 
   return (
-    <Modal isOpen={isOpen} onRequestClose={onRequestClose} contentLabel="Edit Polling Station">
-      <h2>Edit Polling Station</h2>
-      <form onSubmit={(e) => { e.preventDefault(); handleSave(); }}>
-        <label>
-          Name:
-          <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-        </label>
-        <label>
-          Nomination District:
-          <select value={nominationDistrict} onChange={(e) => setNominationDistrict(e.target.value)}>
-            <option value=''> Select District</option>
-            {nominationDistricts.map((district) => (
-              <option key={district._id} value={district._id}>
-                {district.name}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
-          Expected Voters:
-          <input type="number" min="1" value={expectedVoters} onChange={(e) => setExpectedVoters(Number(e.target.value))} />
-        </label>
-        <button type="submit">Save Changes</button>
-        <button type="button" onClick={onRequestClose}>Cancel</button>
-      </form>
-    </Modal>
+    <>
+      {isOpen && (
+        <div className="modal modal-open">
+          <div className="modal-box">
+            <h2 className="text-2xl font-bold mb-4">Edit Polling Station</h2>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSave();
+              }}
+            >
+              <label className="block mb-2">Name:</label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="input input-bordered w-full mb-4"
+              />
+
+              <label className="block mb-2">Nomination District:</label>
+              <select
+                value={nominationDistrict}
+                onChange={(e) => setNominationDistrict(e.target.value)}
+                className="select select-bordered w-full mb-4"
+              >
+                <option value="">Select District</option>
+                {nominationDistricts.map((district) => (
+                  <option key={district._id} value={district._id}>
+                    {district.name}
+                  </option>
+                ))}
+              </select>
+
+              <label className="block mb-2">Expected Voters:</label>
+              <input
+                type="number"
+                min="1"
+                value={expectedVoters}
+                onChange={(e) => setExpectedVoters(Number(e.target.value))}
+                className="input input-bordered w-full mb-4"
+              />
+
+              <div className="modal-action">
+                <button type="submit" className="btn btn-primary">
+                  Save Changes
+                </button>
+                <button type="button" className="btn" onClick={onRequestClose}>
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
+
 EditPollingStationModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onRequestClose: PropTypes.func.isRequired,
@@ -94,12 +125,6 @@ EditPollingStationModal.propTypes = {
     expectedVoters: PropTypes.number,
   }),
   onSave: PropTypes.func.isRequired,
-  nominationDistricts: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-    })
-  ),
 };
 
 export default EditPollingStationModal;

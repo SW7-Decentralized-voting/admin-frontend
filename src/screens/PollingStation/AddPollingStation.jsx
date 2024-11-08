@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { addPollingStation, getNominationDistricts } from '../../API';
 import { toast } from 'react-hot-toast';
+import { FaSave } from 'react-icons/fa';
 
 function AddPollingStation({ onPollingStationAdded }) {
   const [name, setName] = useState('');
@@ -83,7 +84,7 @@ function AddPollingStation({ onPollingStationAdded }) {
               value={nominationDistrict}
               onChange={(e) => setNominationDistrict(e.target.value)}
             >
-              <option disabled selected>Select Nomination District</option>
+              <option disabled value=''>Select Nomination District</option>
               {nominationDistricts.map((district) => (
                 <option key={district._id} value={district._id}>
                   {district.name}
@@ -107,7 +108,7 @@ function AddPollingStation({ onPollingStationAdded }) {
           </div>
 
           <button type="submit" className="btn btn-secondary w-full">
-            Add Polling Station
+            <FaSave/> Save
           </button>
         </form>
       </div>

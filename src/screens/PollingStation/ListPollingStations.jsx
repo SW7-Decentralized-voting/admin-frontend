@@ -4,6 +4,7 @@ import { getPollingStations, deletePollingStation } from '../../API';
 import { toast } from 'react-hot-toast';
 import EditPollingStationModal from './EditPollingStationModal';
 import DeleteConfirmationModal from './DeletePollingStationModal';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 function ListPollingStations({ refresh }) {
   const [pollingStations, setPollingStations] = useState([]);
@@ -70,8 +71,8 @@ function ListPollingStations({ refresh }) {
     <div className="card bg-primary text-primary-content h-full">
       <div className="card-body flex flex-col items-center justify-center max-h-full">
         <h2 className="card-title text-center">List of Polling Stations</h2>
-        <div className='overflow-auto'>
-          <table className="table">
+        <div className='overflow-auto bg-secondary rounded-sm'>
+          <table className="table table-zebra-zebra ">
             <thead>
               <tr>
                 <th>Name</th>
@@ -93,11 +94,13 @@ function ListPollingStations({ refresh }) {
                   <td>{station.nominationDistrict}</td>
                   <td>{station.expectedVoters}</td>
                   <td>
-                    <button onClick={() => openEditModal(station)}>Edit</button>
+                    <button className='btn' onClick={() => openEditModal(station)}>
+                      <FaEdit/>
+                    </button>
                   </td>
                   <td>
-                    <button onClick={() => openDeleteModal(station)}>
-                      Delete
+                    <button className='btn btn-error' onClick={() => openDeleteModal(station)}>
+                      <FaTrash/>
                     </button>
                   </td>
                 </tr>
