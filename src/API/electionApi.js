@@ -7,7 +7,7 @@ import api from './api';
  * @param {number} voterCount
  * @returns {Promise<Object>}
  */
-export const startElection = async (voterCount) => {
-    const response = await api.post('/election/start', { voterCount });
+export const startElection = async () => {
+    const response = await api.post('/election/start');
     return response.data;
 };
