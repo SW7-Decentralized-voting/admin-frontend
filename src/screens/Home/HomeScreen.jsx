@@ -1,31 +1,22 @@
-import { useNavigate } from 'react-router-dom';
-import './HomeScreen.css';
+import { FaMapMarkedAlt, FaPersonBooth, FaUsers, FaUserTie } from 'react-icons/fa';
+import HomeBtn from '../Components/HomeBtn';
+import { MdHowToVote, MdOutlineMapsHomeWork } from 'react-icons/md';
+import LogoutBtn from '../Components/LogoutBtn';
 
 function HomeScreen() {
-  const navigate = useNavigate();
-
   return (
-    <div className="home-container">
-      <h1>Admin Dashboard</h1>
-      <div className="button-group">
-        <button onClick={() => navigate('/candidate')} className="home-button">
-          Add Candidate
-        </button>
-        <button onClick={() => navigate('/election')} className="home-button">
-          Election Status
-        </button>
-        <button onClick={() => navigate('/party')} className="home-button">
-          Add Party
-        </button>
-        <button onClick={() => navigate('/nomination-district')} className="home-button">
-          Add Nomination District
-        </button>
-        <button onClick={() => navigate('/constituency')} className="home-button">
-          Add Constituency
-        </button>
-        <button onClick={() => navigate('/polling-station')} className="home-button">
-          Add Polling Station
-        </button>
+    <div className="text-center p-5">
+      <LogoutBtn />
+      <h1 className='text-4xl'>Admin Dashboard</h1>
+      <div className="flex justify-center mt-5">
+        <div className='grid grid-cols-3 gap-4'>
+          <HomeBtn title='Candidates' path='/candidate' icon={FaUserTie} />
+          <HomeBtn title='Election Status' path='/election' icon={MdHowToVote} />
+          <HomeBtn title='Parties' path='/party' icon={FaUsers} />
+          <HomeBtn title='Nomination Districts' path='/nomination-district' icon={MdOutlineMapsHomeWork} />
+          <HomeBtn title='Constituencies' path='/constituency' icon={FaMapMarkedAlt} />
+          <HomeBtn title='Polling Stations' path='/polling-station' icon={FaPersonBooth} />
+        </div>
       </div>
     </div>
   );
