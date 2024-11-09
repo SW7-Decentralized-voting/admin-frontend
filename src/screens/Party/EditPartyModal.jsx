@@ -86,8 +86,8 @@ EditPartyModal.propTypes = {
   onRequestClose: PropTypes.func.isRequired,
   party: PropTypes.shape({
     _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    list: PropTypes.string.isRequired,
+    name: PropTypes.string,
+    list: PropTypes.string,
   }),
   onSave: PropTypes.func.isRequired,
 };

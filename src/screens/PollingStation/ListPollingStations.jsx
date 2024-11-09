@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { getPollingStations, deletePollingStation } from '../../API';
+import { getPollingStations } from '../../API';
 import { toast } from 'react-hot-toast';
 import EditPollingStationModal from './EditPollingStationModal';
 import DeleteConfirmationModal from './DeletePollingStationModal';
@@ -43,26 +43,6 @@ function ListPollingStations({ refresh }) {
       console.error(error);
       toast.error('Failed to fetch polling stations.');
     }
-  };
-
-  const handleDelete = async (stationId) => {
-    try {
-      await deletePollingStation(stationId);
-      fetchPollingStations();
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
-    }
-  };
-
-  const handleSave = async (stationId, pollingStationData) => {
-    setPollingStations((prevStations) =>
-      prevStations.map((station) =>
-        station._id === stationId
-          ? { ...station, ...pollingStationData }
-          : station
-      )
-    );
   };
 
   return (
@@ -111,14 +91,14 @@ function ListPollingStations({ refresh }) {
         isOpen={isEditModalOpen}
         onRequestClose={closeEditModal}
         station={selectedStation}
-        onSave={handleSave}
+        onSave={fetchPollingStations}
       />
 
       <DeleteConfirmationModal
         isOpen={isDeleteModalOpen}
         onRequestClose={closeDeleteModal}
         station={selectedStation}
-        onConfirm={handleDelete}
+        onConfirm={fetchPollingStations}
       />
     </div>
   );

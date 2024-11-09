@@ -44,7 +44,7 @@ DeleteDistrictModal.propTypes = {
   onRequestClose: PropTypes.func.isRequired,
   district: PropTypes.shape({
     _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
+    name: PropTypes.string,
   }).isRequired,
   onConfirm: PropTypes.func.isRequired,
 };

@@ -1,4 +1,4 @@
-import { deleteParty, getParties } from '../../API';
+import { getParties } from '../../API';
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
@@ -43,26 +43,6 @@ function ListParties({ refresh }) {
       console.error(error);
       toast.error('Failed to fetch parties.');
     }
-  };
-
-  const handleDelete = async (partyId) => {
-    try {
-      await deleteParty(partyId);
-      toast.success('Party deleted successfully!');
-      fetchParties();
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
-      toast.error('Failed to delete party. Please try again.');
-    }
-  };
-
-  const handleSave = async (partyId, partyData) => {
-    setParties((prevParties) =>
-      prevParties.map((party) =>
-        party._id === partyId ? { ...party, ...partyData } : party
-      )
-    );
   };
 
   return (
@@ -115,14 +95,14 @@ function ListParties({ refresh }) {
         isOpen={isEditModalOpen}
         onRequestClose={closeEditModal}
         party={selectedParty}
-        onSave={handleSave}
+        onSave={fetchParties}
       />
 
       <DeleteConfirmationModal
         isOpen={isDeleteModalOpen}
         onRequestClose={closeDeleteModal}
         party={selectedParty}
-        onConfirm={handleDelete}
+        onConfirm={fetchParties}
       />
     </div>
   );

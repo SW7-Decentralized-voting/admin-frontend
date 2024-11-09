@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { getNominationDistricts, deleteNominationDistrict } from '../../API';
+import { getNominationDistricts } from '../../API';
 import { toast } from 'react-hot-toast';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import EditDistrictModal from './EditDistrictModal';
@@ -43,26 +43,6 @@ function ListDistricts({ refresh }) {
       console.error(error);
       toast.error('Failed to fetch nomination districts.');
     }
-  };
-
-  const handleDelete = async (districtId) => {
-    try {
-      await deleteNominationDistrict(districtId);
-      fetchDistricts();
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
-    }
-  };
-
-  const handleSave = async (districtId, nominationDistrictData) => {
-    setDistricts((prevDistricts) =>
-      prevDistricts.map((district) =>
-        district._id === districtId
-          ? { ...district, ...nominationDistrictData }
-          : district
-      )
-    );
   };
 
   return (
@@ -115,14 +95,14 @@ function ListDistricts({ refresh }) {
         isOpen={isEditModalOpen}
         onRequestClose={closeEditModal}
         district={selectedDistrict}
-        onSave={handleSave}
+        onSave={fetchDistricts}
       />
 
       <DeleteDistrictModal
         isOpen={isDeleteModalOpen}
         onRequestClose={closeDeleteModal}
         district={selectedDistrict}
-        onConfirm={handleDelete}
+        onConfirm={fetchDistricts}
       />
     </div>
   );
