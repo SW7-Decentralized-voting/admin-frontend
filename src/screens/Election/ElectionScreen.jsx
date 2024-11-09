@@ -1,4 +1,3 @@
-import './ElectionScreen.css';
 import { useState } from 'react';
 import { startElection } from '../../API';
 import { toast } from 'react-hot-toast';

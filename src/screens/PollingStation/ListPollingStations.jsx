@@ -48,12 +48,10 @@ function ListPollingStations({ refresh }) {
   const handleDelete = async (stationId) => {
     try {
       await deletePollingStation(stationId);
-      toast.success('Polling station deleted successfully!');
       fetchPollingStations();
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
-      toast.error('Failed to delete polling station. Please try again.');
     }
   };
 
