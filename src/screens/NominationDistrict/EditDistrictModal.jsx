@@ -101,8 +101,8 @@ EditDistrictModal.propTypes = {
   onRequestClose: PropTypes.func.isRequired,
   district: PropTypes.shape({
     _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    constituency: PropTypes.string.isRequired,
+    name: PropTypes.string,
+    constituency: PropTypes.string,
   }).isRequired,
   onSave: PropTypes.func.isRequired,
 };

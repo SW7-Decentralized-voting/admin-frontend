@@ -1,52 +1,22 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { addConstituency } from '../../API';
-import { toast } from 'react-hot-toast';
-import { FaArrowLeft } from 'react-icons/fa';
-import './ConstituencyScreen.css';
+import Header from '../Components/Header';
+import AddConstituency from './AddConstituency';
+import ListConstituencies from './ListConstituencies';
 
 function ConstituencyScreen() {
-  const navigate = useNavigate();
-  const [name, setName] = useState('');
+  const [refreshList, setRefreshList] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const constituencyData = { name };
-
-    try {
-      await addConstituency(constituencyData);
-      setName('');
-      toast.success('Constituency added successfully!');
-      navigate('/home');
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err);
-      toast.error(err.response?.data?.error || 'An error occurred while adding the constituency');
-    }
+  const handleConstituencyAdded = () => {
+    setRefreshList(!refreshList);
   };
 
   return (
-    <div className="constituencies-container">
-      <button className="back-button" onClick={() => navigate('/home')}>
-        <FaArrowLeft /> Back
-      </button>
-
-      <h1>Add a Constituency</h1>
-      <form onSubmit={handleSubmit} className="constituency-form">
-        <div className="form-group">
-          <label htmlFor="name">Constituency Name:</label>
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            placeholder="Enter constituency name"
-          />
-        </div>
-        <button type="submit" className="submit-button">Add Constituency</button>
-      </form>
+    <div className="flex flex-col w-full h-screen items-center justify-evenly">
+      <Header title="Constituency Management" />
+      <div className="flex flex-row justify-center items-start gap-4 h-4/5">
+        <AddConstituency onConstituencyAdded={handleConstituencyAdded} />
+        <ListConstituencies refresh={refreshList} />
+      </div>
     </div>
   );
 }
