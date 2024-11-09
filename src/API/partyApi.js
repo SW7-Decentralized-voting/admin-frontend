@@ -1,5 +1,3 @@
-// src/API/party.js
-
 import api from './api';
 
 /**
