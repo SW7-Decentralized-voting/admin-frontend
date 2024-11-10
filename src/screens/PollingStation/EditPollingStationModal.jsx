@@ -47,7 +47,7 @@ function EditPollingStationModal({ isOpen, onRequestClose, station, onSave }) {
         expectedVoters,
       });
       toast.success('Polling station updated successfully!');
-      onSave(station._id, { name, nominationDistrict, expectedVoters });
+      onSave();
       onRequestClose();
     } catch (error) {
       // eslint-disable-next-line no-console

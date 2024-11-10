@@ -36,7 +36,7 @@ function EditDistrictModal({ isOpen, onRequestClose, district, onSave }) {
     try {
       await updateNominationDistrict(district._id, { name, constituency });
       toast.success('District updated successfully!');
-      onSave(district._id, { name, constituency });
+      onSave();
       onRequestClose();
     } catch (error) {
       // eslint-disable-next-line no-console

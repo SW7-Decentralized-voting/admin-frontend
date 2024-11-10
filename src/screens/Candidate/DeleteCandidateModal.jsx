@@ -1,19 +1,23 @@
 import { toast } from 'react-hot-toast';
-import { deleteNominationDistrict } from '../../API';
-
+import { deleteCandidate } from '../../API';
 import PropTypes from 'prop-types';
 
-function DeleteDistrictModal({ isOpen, onRequestClose, district, onSave }) {
+function DeleteCandidateModal({
+  isOpen,
+  onRequestClose,
+  candidate,
+  onSave,
+}) {
   const handleDelete = async () => {
     try {
-      await deleteNominationDistrict(district._id);
-      toast.success('District deleted successfully!');
+      await deleteCandidate(candidate._id);
+      toast.success('Candidate deleted successfully!');
       onSave();
       onRequestClose();
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
-      toast.error('Failed to delete district. Please try again.');
+      toast.error('Failed to delete candidate. Please try again.');
     }
   };
 
@@ -23,7 +27,9 @@ function DeleteDistrictModal({ isOpen, onRequestClose, district, onSave }) {
         <div className="modal modal-open">
           <div className="modal-box">
             <h2 className="text-2xl font-bold mb-4">Are you sure?</h2>
-            <p>Do you really want to delete <strong>{district?.name}</strong>?</p>
+            <p>
+              Do you really want to delete <strong>{candidate?.name}</strong>?
+            </p>
             <div className="modal-action">
               <button className="btn btn-warning" onClick={handleDelete}>
                 Yes, Delete
@@ -38,15 +44,11 @@ function DeleteDistrictModal({ isOpen, onRequestClose, district, onSave }) {
     </>
   );
 }
-
-DeleteDistrictModal.propTypes = {
+DeleteCandidateModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onRequestClose: PropTypes.func.isRequired,
-  district: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string,
-  }).isRequired,
+  candidate: PropTypes.object.isRequired,
   onSave: PropTypes.func.isRequired,
 };
 
-export default DeleteDistrictModal;
+export default DeleteCandidateModal;

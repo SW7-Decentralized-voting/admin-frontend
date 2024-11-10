@@ -46,8 +46,8 @@ function ListDistricts({ refresh }) {
   };
 
   return (
-    <div className="card bg-primary text-primary-content min-h-80 max-h-full overflow-auto">
-      <div className="card-body flex flex-col items-center justify-center">
+    <div className="card bg-primary text-primary-content min-h-80 max-h-full">
+      <div className="card-body flex flex-col items-center justify-center overflow-auto">
         <div className="overflow-auto bg-secondary rounded-sm">
           <table className="table table-zebra-zebra ">
             <thead>
@@ -102,7 +102,7 @@ function ListDistricts({ refresh }) {
         isOpen={isDeleteModalOpen}
         onRequestClose={closeDeleteModal}
         district={selectedDistrict}
-        onConfirm={fetchDistricts}
+        onSave={fetchDistricts}
       />
     </div>
   );

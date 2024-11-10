@@ -2,12 +2,12 @@ import PropTypes from 'prop-types';
 import { deletePollingStation } from '../../API';
 import { toast } from 'react-hot-toast';
 
-function DeleteConfirmationModal({ isOpen, onRequestClose, station, onConfirm }) {
+function DeleteConfirmationModal({ isOpen, onRequestClose, station, onSave }) {
   const handleDelete = async () => {
     try {
       await deletePollingStation(station._id);
       toast.success('Polling station deleted successfully!');
-      onConfirm(station._id);
+      onSave();
       onRequestClose();
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -45,7 +45,7 @@ DeleteConfirmationModal.propTypes = {
     name: PropTypes.string,
     _id: PropTypes.string.isRequired,
   }),
-  onConfirm: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
 };
 
 export default DeleteConfirmationModal;

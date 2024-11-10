@@ -29,7 +29,7 @@ function EditPartyModal({ isOpen, onRequestClose, party, onSave }) {
         list,
       });
       toast.success('Party updated successfully!');
-      onSave(party._id, { name, list });
+      onSave();
       onRequestClose();
     } catch (error) {
       // eslint-disable-next-line no-console

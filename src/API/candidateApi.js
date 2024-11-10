@@ -1,5 +1,3 @@
-// src/API/candidate.js
-
 import api from './api';
 
 /**

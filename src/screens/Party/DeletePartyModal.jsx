@@ -2,12 +2,12 @@ import { deleteParty } from '../../API';
 import { toast } from 'react-hot-toast';
 import PropTypes from 'prop-types';
 
-function DeleteConfirmationModal({ isOpen, onRequestClose, party, onConfirm }) {
+function DeleteConfirmationModal({ isOpen, onRequestClose, party, onSave }) {
   const handleDelete = async () => {
     try {
       await deleteParty(party._id);
       toast.success('Party deleted successfully!');
-      onConfirm(party._id);
+      onSave();
       onRequestClose();
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -44,7 +44,7 @@ DeleteConfirmationModal.propTypes = {
     _id: PropTypes.string.isRequired,
     name: PropTypes.string,
   }).isRequired,
-  onConfirm: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
 };
 
 export default DeleteConfirmationModal;

@@ -1,23 +1,23 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { toast } from 'react-hot-toast';
-import { getConstituencies} from '../../API';
-import DeleteConstituencyModal from './DeleteConstituencyModal';
-import EditConstituencyModal from './EditConstituencyModal';
+import { getPartyCandidates } from '../../API/';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import EditCandidateModal from './EditCandidateModal';
+import DeleteCandidateModal from './DeleteCandidateModal';
 
-function ListConstituencies({ refresh }) {
-  const [constituencies, setConstituencies] = useState([]);
+function ListCandidates({ refresh }) {
+  const [candidates, setCandidates] = useState([]);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [selectedConstituency, setSelectedConstituency] = useState(null);
+  const [selectedCandidate, setSelectedCandidate] = useState(null);
 
   useEffect(() => {
-    fetchConstituencies();
+    fetchCandidates();
   }, [refresh]);
 
-  const openEditModal = (constituency) => {
-    setSelectedConstituency(constituency);
+  const openEditModal = (candidate) => {
+    setSelectedCandidate(candidate);
     setIsEditModalOpen(true);
   };
 
@@ -25,8 +25,8 @@ function ListConstituencies({ refresh }) {
     setIsEditModalOpen(false);
   };
 
-  const openDeleteModal = (constituency) => {
-    setSelectedConstituency(constituency);
+  const openDeleteModal = (candidate) => {
+    setSelectedCandidate(candidate);
     setIsDeleteModalOpen(true);
   };
 
@@ -34,14 +34,14 @@ function ListConstituencies({ refresh }) {
     setIsDeleteModalOpen(false);
   };
 
-  const fetchConstituencies = async () => {
+  const fetchCandidates = async () => {
     try {
-      const constituencies = await getConstituencies();
-      setConstituencies(constituencies);
+      const candidates = await getPartyCandidates();
+      setCandidates(candidates);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
-      toast.error('Failed to fetch constituencies.');
+      toast.error('Failed to fetch candidates.');
     }
   };
 
@@ -53,23 +53,27 @@ function ListConstituencies({ refresh }) {
             <thead>
               <tr>
                 <th>Name</th>
+                <th>Party</th>
+                <th>District</th>
                 <th></th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              {constituencies.length === 0 && (
+              {candidates.length === 0 && (
                 <tr>
-                  <td colSpan="4">No Constituencies found.</td>
+                  <td colSpan="4">No Candidates found.</td>
                 </tr>
               )}
-              {constituencies.map((constit) => (
-                <tr key={constit._id}>
-                  <td>{constit.name}</td>
+              {candidates.map((candidate) => (
+                <tr key={candidate._id}>
+                  <td>{candidate.name}</td>
+                  <td>{candidate.party}</td>
+                  <td>{candidate.nominationDistrict}</td>
                   <td>
                     <button
                       className="btn"
-                      onClick={() => openEditModal(constit)}
+                      onClick={() => openEditModal(candidate)}
                     >
                       <FaEdit />
                     </button>
@@ -77,7 +81,7 @@ function ListConstituencies({ refresh }) {
                   <td>
                     <button
                       className="btn btn-error"
-                      onClick={() => openDeleteModal(constit)}
+                      onClick={() => openDeleteModal(candidate)}
                     >
                       <FaTrash />
                     </button>
@@ -89,24 +93,24 @@ function ListConstituencies({ refresh }) {
         </div>
       </div>
 
-      <EditConstituencyModal
+      <EditCandidateModal
         isOpen={isEditModalOpen}
         onRequestClose={closeEditModal}
-        constituency={selectedConstituency}
-        onSave={fetchConstituencies}
+        candidate={selectedCandidate}
+        onSave={fetchCandidates}
       />
 
-      <DeleteConstituencyModal
+      <DeleteCandidateModal
         isOpen={isDeleteModalOpen}
         onRequestClose={closeDeleteModal}
-        constituency={selectedConstituency}
-        onSave={fetchConstituencies}
+        candidate={selectedCandidate}
+        onSave={fetchCandidates}
       />
     </div>
   );
 }
-ListConstituencies.propTypes = {
+ListCandidates.propTypes = {
   refresh: PropTypes.bool.isRequired,
 };
 
-export default ListConstituencies;
+export default ListCandidates;

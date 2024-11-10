@@ -1,5 +1,3 @@
-// src/API/index.js
-
 // Candidate APIs
 export * from './candidateApi';
 
