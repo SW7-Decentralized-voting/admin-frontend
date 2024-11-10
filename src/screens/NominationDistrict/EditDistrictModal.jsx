@@ -99,11 +99,7 @@ function EditDistrictModal({ isOpen, onRequestClose, district, onSave }) {
 EditDistrictModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onRequestClose: PropTypes.func.isRequired,
-  district: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string,
-    constituency: PropTypes.string,
-  }).isRequired,
+  district: PropTypes.object,
   onSave: PropTypes.func.isRequired,
 };
 

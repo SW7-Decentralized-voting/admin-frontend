@@ -42,10 +42,7 @@ function DeleteDistrictModal({ isOpen, onRequestClose, district, onSave }) {
 DeleteDistrictModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onRequestClose: PropTypes.func.isRequired,
-  district: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string,
-  }).isRequired,
+  district: PropTypes.object,
   onSave: PropTypes.func.isRequired,
 };
 

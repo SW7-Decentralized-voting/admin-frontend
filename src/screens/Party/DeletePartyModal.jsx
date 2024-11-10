@@ -40,10 +40,7 @@ function DeleteConfirmationModal({ isOpen, onRequestClose, party, onSave }) {
 DeleteConfirmationModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onRequestClose: PropTypes.func.isRequired,
-  party: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string,
-  }).isRequired,
+  party: PropTypes.object,
   onSave: PropTypes.func.isRequired,
 };
 

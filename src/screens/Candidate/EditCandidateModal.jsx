@@ -130,12 +130,7 @@ function EditCandidateModal({ isOpen, onRequestClose, candidate, onSave }) {
 EditCandidateModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onRequestClose: PropTypes.func.isRequired,
-  candidate: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string,
-    party: PropTypes.string,
-    district: PropTypes.string,
-  }).isRequired,
+  candidate: PropTypes.object,
   onSave: PropTypes.func.isRequired,
 };
 

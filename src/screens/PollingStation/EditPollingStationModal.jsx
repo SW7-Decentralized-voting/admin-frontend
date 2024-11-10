@@ -118,12 +118,7 @@ function EditPollingStationModal({ isOpen, onRequestClose, station, onSave }) {
 EditPollingStationModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onRequestClose: PropTypes.func.isRequired,
-  station: PropTypes.shape({
-    _id: PropTypes.string,
-    name: PropTypes.string,
-    nominationDistrict: PropTypes.string,
-    expectedVoters: PropTypes.number,
-  }),
+  station: PropTypes.object,
   onSave: PropTypes.func.isRequired,
 };
 

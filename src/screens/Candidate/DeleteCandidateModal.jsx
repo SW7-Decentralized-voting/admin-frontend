@@ -47,7 +47,7 @@ function DeleteCandidateModal({
 DeleteCandidateModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onRequestClose: PropTypes.func.isRequired,
-  candidate: PropTypes.object.isRequired,
+  candidate: PropTypes.object,
   onSave: PropTypes.func.isRequired,
 };
 

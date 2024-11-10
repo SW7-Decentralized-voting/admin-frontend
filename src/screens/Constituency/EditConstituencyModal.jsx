@@ -79,10 +79,7 @@ EditConstituencyModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onRequestClose: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
-  constituency: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string,
-  }).isRequired,
+  constituency: PropTypes.object,
 };
 
 export default EditConstituencyModal;
