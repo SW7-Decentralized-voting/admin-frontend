@@ -11,6 +11,10 @@ import ConstituencyScreen from './screens/Constituency/ConstituencyScreen';
 import PollingStationScreen from './screens/PollingStation/PollingStationScreen';
 import { AuthProvider } from './utils/authContext';
 
+/**
+ * App component that renders the application
+ * @returns {JSX.Element} App component
+ */
 function App() {
   return (
     <AuthProvider>

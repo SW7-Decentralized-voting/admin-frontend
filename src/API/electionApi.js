@@ -4,8 +4,7 @@ import api from './api';
 
 /**
  * Start a new election
- * @param {number} voterCount
- * @returns {Promise<Object>}
+ * @returns {Promise<object>} Election data
  */
 export const startElection = async () => {
     const response = await api.post('/election/start');

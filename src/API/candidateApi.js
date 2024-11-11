@@ -2,18 +2,23 @@ import api from './api';
 
 /**
  * Fetch candidates by party ID
- * @param {string} partyId
- * @returns {Promise<Array>}
+ * @param {string} partyId Party ID to filter candidates
+ * @returns {Promise<Array>} List of candidates
  */
 export const getPartyCandidates = async (partyId) => {
-    const response = await api.get('/candidates', { params: { partyId } });
+    let queryStr = '';
+    if (partyId) {
+        queryStr = '?party=' + partyId;
+    }
+    const response = await api.get('/candidates' + queryStr);
+    console.log(response);
     return response.data;
 };
 
 /**
  * Add a new candidate
- * @param {Object} candidateData
- * @returns {Promise<Object>}
+ * @param {CandidateData} candidateData Candidate data
+ * @returns {Promise<Candidate>} Created candidate
  */
 export const addCandidate = async (candidateData) => {
     const response = await api.post('/candidates', candidateData);
@@ -22,8 +27,8 @@ export const addCandidate = async (candidateData) => {
 
 /**
  * Delete a candidate
- * @param {string} candidateId
- * @returns {Promise<Object>}
+ * @param {string} candidateId Id of the candidate to delete
+ * @returns {Promise<Candidate>} Deleted candidate
  */
 export const deleteCandidate = async (candidateId) => {
     const response = await api.delete(`/candidates/${candidateId}`);
@@ -32,11 +37,36 @@ export const deleteCandidate = async (candidateId) => {
 
 /**
  * Update a candidate
- * @param {string} candidateId
- * @param {Object} candidateData
- * @returns {Promise<Object>}
+ * @param {string} candidateId Id of the candidate to update
+ * @param {CandidateDataOpt} candidateData Candidate data to update with
+ * @returns {Promise<Candidate>} Updated candidate
  */
 export const updateCandidate = async (candidateId, candidateData) => {
     const response = await api.patch(`/candidates/${candidateId}`, candidateData);
     return response.data;
 };
+
+/**
+ * @typedef {object} CandidateData
+ * @property {string} name name of the candidate
+ * @property {string} party mongoose object id of the party the candidate belongs to
+ * @property {string} nominationDistrict mongoose object id of the district the candidate is nominated in
+ */
+
+/**
+ * @typedef {object} CandidateDataOpt
+ * @property {string} [name] name of the candidate
+ * @property {string} [party] mongoose object id of the party the candidate belongs to
+ * @property {string} [nominationDistrict] mongoose object id of the district the candidate is nominated in
+ */
+
+/**
+ * @typedef {object} Candidate
+ * @property {string} _id Id of the candidate
+ * @property {string} name Name of the candidate
+ * @property {string} party Id of the party the candidate belongs to
+ * @property {string} nominationDistrict Id of the district the candidate is nominated in
+ * @property {string} createdAt Date the candidate was created
+ * @property {string} updatedAt Date the candidate was last updated
+ * @property {string} __v Version of the candidate
+ */
