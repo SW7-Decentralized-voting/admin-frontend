@@ -1,6 +1,6 @@
-import AddPollingStation from './AddPollingStation';
-import ListPollingStations from './ListPollingStations';
-import Header from '../Components/Header';
+import AddPollingStation from '../../components/pollingStation/AddPollingStation';
+import ListPollingStations from '../../components/pollingStation/ListPollingStations';
+import Header from '../../components/misc/Header';
 import { useState } from 'react';
 
 function PollingStationScreen() {

@@ -1,23 +1,23 @@
-import { getParties } from '../../API';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
+import { getPartyCandidates } from '../../API/';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import DeleteConfirmationModal from './DeletePartyModal';
-import EditPartyModal from './EditPartyModal';
+import EditCandidateModal from '../../components/candidate/EditCandidateModal';
+import DeleteCandidateModal from '../../components/candidate/DeleteCandidateModal';
 
-function ListParties({ refresh }) {
-  const [parties, setParties] = useState([]);
+function ListCandidates({ refresh }) {
+  const [candidates, setCandidates] = useState([]);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [selectedParty, setSelectedParty] = useState(null);
+  const [selectedCandidate, setSelectedCandidate] = useState(null);
 
   useEffect(() => {
-    fetchParties();
+    fetchCandidates();
   }, [refresh]);
 
-  const openEditModal = (party) => {
-    setSelectedParty(party);
+  const openEditModal = (candidate) => {
+    setSelectedCandidate(candidate);
     setIsEditModalOpen(true);
   };
 
@@ -25,8 +25,8 @@ function ListParties({ refresh }) {
     setIsEditModalOpen(false);
   };
 
-  const openDeleteModal = (party) => {
-    setSelectedParty(party);
+  const openDeleteModal = (candidate) => {
+    setSelectedCandidate(candidate);
     setIsDeleteModalOpen(true);
   };
 
@@ -34,14 +34,14 @@ function ListParties({ refresh }) {
     setIsDeleteModalOpen(false);
   };
 
-  const fetchParties = async () => {
+  const fetchCandidates = async () => {
     try {
-      const parties = await getParties();
-      setParties(parties);
+      const candidates = await getPartyCandidates();
+      setCandidates(candidates);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
-      toast.error('Failed to fetch parties.');
+      toast.error('Failed to fetch candidates.');
     }
   };
 
@@ -53,25 +53,27 @@ function ListParties({ refresh }) {
             <thead>
               <tr>
                 <th>Name</th>
-                <th>List</th>
+                <th>Party</th>
+                <th>District</th>
                 <th></th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              {parties.length === 0 && (
+              {candidates.length === 0 && (
                 <tr>
-                  <td colSpan="4">No polling stations found.</td>
+                  <td colSpan="4">No Candidates found.</td>
                 </tr>
               )}
-              {parties.map((party) => (
-                <tr key={party._id}>
-                  <td>{party.name}</td>
-                  <td>{party.list}</td>
+              {candidates.map((candidate) => (
+                <tr key={candidate._id}>
+                  <td>{candidate.name}</td>
+                  <td>{candidate.party}</td>
+                  <td>{candidate.nominationDistrict}</td>
                   <td>
                     <button
                       className="btn"
-                      onClick={() => openEditModal(party)}
+                      onClick={() => openEditModal(candidate)}
                     >
                       <FaEdit />
                     </button>
@@ -79,7 +81,7 @@ function ListParties({ refresh }) {
                   <td>
                     <button
                       className="btn btn-error"
-                      onClick={() => openDeleteModal(party)}
+                      onClick={() => openDeleteModal(candidate)}
                     >
                       <FaTrash />
                     </button>
@@ -91,24 +93,24 @@ function ListParties({ refresh }) {
         </div>
       </div>
 
-      <EditPartyModal
+      <EditCandidateModal
         isOpen={isEditModalOpen}
         onRequestClose={closeEditModal}
-        party={selectedParty}
-        onSave={fetchParties}
+        candidate={selectedCandidate}
+        onSave={fetchCandidates}
       />
 
-      <DeleteConfirmationModal
+      <DeleteCandidateModal
         isOpen={isDeleteModalOpen}
         onRequestClose={closeDeleteModal}
-        party={selectedParty}
-        onSave={fetchParties}
+        candidate={selectedCandidate}
+        onSave={fetchCandidates}
       />
     </div>
   );
 }
-ListParties.propTypes = {
+ListCandidates.propTypes = {
   refresh: PropTypes.bool.isRequired,
 };
 
-export default ListParties;
+export default ListCandidates;

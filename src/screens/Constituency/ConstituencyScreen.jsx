@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import Header from '../Components/Header';
-import AddConstituency from './AddConstituency';
-import ListConstituencies from './ListConstituencies';
+import Header from '../../components/misc/Header';
+import AddConstituency from '../../components/constituency/AddConstituency';
+import ListConstituencies from '../../components/constituency/ListConstituencies';
 
 function ConstituencyScreen() {
   const [refreshList, setRefreshList] = useState(false);

@@ -1,7 +1,7 @@
 import { FaMapMarkedAlt, FaPersonBooth, FaUsers, FaUserTie } from 'react-icons/fa';
-import HomeBtn from '../Components/HomeBtn';
+import HomeBtn from '../../components/misc/HomeBtn';
 import { MdHowToVote, MdOutlineMapsHomeWork } from 'react-icons/md';
-import LogoutBtn from '../Components/LogoutBtn';
+import LogoutBtn from '../../components/misc/LogoutBtn';
 
 function HomeScreen() {
   return (

@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { toast } from 'react-hot-toast';
 import { getConstituencies} from '../../API';
-import DeleteConstituencyModal from './DeleteConstituencyModal';
-import EditConstituencyModal from './EditConstituencyModal';
+import DeleteConstituencyModal from '../../components/constituency/DeleteConstituencyModal';
+import EditConstituencyModal from '../../components/constituency/EditConstituencyModal';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
 function ListConstituencies({ refresh }) {

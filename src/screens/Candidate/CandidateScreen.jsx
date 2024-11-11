@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import Header from '../Components/Header';
-import AddCandidate from './AddCandidate';
-import ListCandidates from './ListCandidates';
+import Header from '../../components/misc/Header';
+import AddCandidate from '../../components/candidate/AddCandidate';
+import ListCandidates from '../../components/candidate/ListCandidates';
+
 
 function CandidateScreen() {
   const [refreshList, setRefreshList] = useState(false);

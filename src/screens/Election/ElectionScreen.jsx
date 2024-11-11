@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { startElection } from '../../API';
 import { toast } from 'react-hot-toast';
-import { electionPhaseDetails, ElectionPhases } from './electionPhaseDetails';
-import Header from '../Components/Header';
+import { electionPhaseDetails, ElectionPhases } from '../../components/election/electionPhaseDetails';
+import Header from '../../components/misc/Header';
 
 function ElectionScreen() {
   const [electionState, setElectionState] = useState(

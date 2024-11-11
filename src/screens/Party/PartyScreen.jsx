@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import Header from '../Components/Header';
-import AddParty from './AddParty';
-import ListParties from './ListParties';
+import Header from '../../components/misc/Header';
+import AddParty from '../../components/party/AddParty';
+import ListParties from '../../components/party/ListParties';
 
 function PartyScreen() {
   const [refreshList, setRefreshList] = useState(false);

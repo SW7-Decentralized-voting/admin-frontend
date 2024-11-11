@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import AddNominationDistrict from './AddNominationDistrict';
-import ListDistricts from './ListDistricts';
-import Header from '../Components/Header';
+import AddNominationDistrict from '../../components/nominationDistrict/AddNominationDistrict';
+import ListDistricts from '../../components/nominationDistrict/ListDistricts';
+import Header from '../../components/misc/Header';
 
 function NominationDistrictScreen() {
   const [refreshList, setRefreshList] = useState(false);

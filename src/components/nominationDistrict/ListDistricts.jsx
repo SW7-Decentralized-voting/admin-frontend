@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { getNominationDistricts } from '../../API';
 import { toast } from 'react-hot-toast';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import EditDistrictModal from './EditDistrictModal';
-import DeleteDistrictModal from './DeleteDistrictModal';
+import EditDistrictModal from '../../components/nominationDistrict/EditDistrictModal';
+import DeleteDistrictModal from '../../components/nominationDistrict/DeleteDistrictModal';
 
 function ListDistricts({ refresh }) {
   const [districts, setDistricts] = useState([]);
