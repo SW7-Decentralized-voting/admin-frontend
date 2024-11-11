@@ -43,14 +43,9 @@ function EditItemModal({
       });
       setFormData(initialData);
     }
-  }, [item]);
+  }, [item, formFields]);
 
   const handleChange = (field, value) => {
-		console.log(field, value);
-		console.log({
-			...formData,
-			[field.name]: value
-		})
     setFormData((prevData) => ({
       ...prevData,
       [field.name]: value,
@@ -77,6 +72,7 @@ function EditItemModal({
       await onSave();
       onRequestClose();
     } catch (error) {
+			// eslint-disable-next-line no-console
       console.error(error);
       toast.error(`Failed to update ${itemName}. Please try again.`);
     }
@@ -144,6 +140,7 @@ EditItemModal.propTypes = {
 	onSave: PropTypes.func.isRequired,
 	formFields: PropTypes.array.isRequired,
 	itemName: PropTypes.string.isRequired,
+	updateItem: PropTypes.func.isRequired,
 };
 
 export default EditItemModal;

@@ -3,6 +3,7 @@ import api from './api';
 /**
  * Fetch candidates by party ID
  * @param {string} partyId Party ID to filter candidates
+ * @param {Array<string>} populate Fields to populate
  * @returns {Promise<Array>} List of candidates
  */
 export const getPartyCandidates = async (partyId, populate=false) => {
@@ -14,7 +15,6 @@ export const getPartyCandidates = async (partyId, populate=false) => {
         populate ? queryStr = '?populate=' + populate : null;
     }
     const response = await api.get('/candidates' + queryStr);
-    console.log(response.data);
     return response.data;
 };
 

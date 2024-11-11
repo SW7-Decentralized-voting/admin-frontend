@@ -29,6 +29,7 @@ function AddItem({
             const data = await field.fetchOptions();  // Use the corresponding fetch function for this field
             options[field.name] = data;
           } catch (error) {
+						// eslint-disable-next-line no-console
             console.error(`Error fetching options for ${field.name}:`, error);
             toast.error(`Failed to load options for ${field.label}.`);
           }
@@ -76,6 +77,7 @@ function AddItem({
       resetStates();
       onItemAdded();
     } catch (error) {
+			// eslint-disable-next-line no-console
       console.error(error);
       toast.error(`Failed to add ${itemType}. Please try again.`);
     }

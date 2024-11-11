@@ -2,6 +2,7 @@ import api from './api';
 
 /**
  * Fetch all polling stations
+ * @param {Array<string>} populate Fields to populate
  * @returns {Promise<Array<PollingStation>>} List of polling stations
  */
 export const getPollingStations = async (populate) => {

@@ -22,7 +22,7 @@ function CandidateScreen() {
       console.error(error);
       toast.error('Failed to fetch candidates.');
     }
-  }
+  };
 
   useEffect(() => {
     fetchCandidates().then((candidates) => {

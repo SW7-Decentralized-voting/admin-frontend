@@ -4,6 +4,7 @@ import api from './api';
 
 /**
  * Fetch all nomination districts
+ * @param {Array<string>} [populate] Field to
  * @returns {Promise<Array<NominationDistrict>>} List of nomination districts
  */
 export const getNominationDistricts = async (populate) => {

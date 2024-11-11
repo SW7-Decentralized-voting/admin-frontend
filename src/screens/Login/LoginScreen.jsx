@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../utils/useAuth';
 import { login } from '../../API';
 
 function LoginScreen() {
@@ -15,12 +14,11 @@ function LoginScreen() {
     e.preventDefault();
 
     const token = await login(e.target.password.value);
-    console.log(token);
     if (!token) {
       setError('Invalid password');
       return;
     }
-    sessionStorage.setItem('jwt', token)
+    sessionStorage.setItem('jwt', token);
     navigate('/home');
   };
 
