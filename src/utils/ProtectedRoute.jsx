@@ -3,9 +3,8 @@ import { useAuth } from './useAuth';
 import PropTypes from 'prop-types';
 
 function ProtectedRoute({ children }) {
-  const { isAuthenticated } = useAuth();
 
-  return isAuthenticated ? children : <Navigate to="/login" />;
+  return typeof sessionStorage.getItem('jwt') === 'string' ? children : <Navigate to="/login" />;
 }
 
 ProtectedRoute.propTypes = {

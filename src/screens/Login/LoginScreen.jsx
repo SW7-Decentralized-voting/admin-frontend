@@ -1,27 +1,27 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../utils/useAuth';
+import { login } from '../../API';
 
 function LoginScreen() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { login } = useAuth();
 
   // This is the hardcoded password for demonstration purposes.
   // In a real app, you would use a more secure method of authentication.
-  const correctPassword = 'password'; 
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    
-    // Check if the entered password matches
-    if (password === correctPassword) {
-      login(); // Log the user in via context
-      navigate('/home');
-    } else {
-      setError('Invalid password. Please try again.');
+
+    const token = await login(e.target.password.value);
+    console.log(token);
+    if (!token) {
+      setError('Invalid password');
+      return;
     }
+    sessionStorage.setItem('jwt', token)
+    navigate('/home');
   };
 
   return (
