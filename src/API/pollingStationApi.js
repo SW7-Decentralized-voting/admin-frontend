@@ -4,8 +4,9 @@ import api from './api';
  * Fetch all polling stations
  * @returns {Promise<Array<PollingStation>>} List of polling stations
  */
-export const getPollingStations = async () => {
-  const response = await api.get('/pollingStations');
+export const getPollingStations = async (populate) => {
+  let queryStr = populate ? '?populate=' + populate : '';
+  const response = await api.get('/pollingStations' + queryStr);
   return response.data;
 };
 

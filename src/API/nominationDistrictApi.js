@@ -6,8 +6,10 @@ import api from './api';
  * Fetch all nomination districts
  * @returns {Promise<Array<NominationDistrict>>} List of nomination districts
  */
-export const getNominationDistricts = async () => {
-    const response = await api.get('/nominationDistricts');
+export const getNominationDistricts = async (populate) => {
+    let queryStr = '';
+    populate ? queryStr = '?populate=' + populate : null;
+    const response = await api.get('/nominationDistricts' + queryStr);
     return response.data;
 };
 

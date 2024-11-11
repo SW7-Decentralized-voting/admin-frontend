@@ -5,12 +5,16 @@ import api from './api';
  * @param {string} partyId Party ID to filter candidates
  * @returns {Promise<Array>} List of candidates
  */
-export const getPartyCandidates = async (partyId) => {
+export const getPartyCandidates = async (partyId, populate=false) => {
     let queryStr = '';
     if (partyId) {
         queryStr = '?party=' + partyId;
+        populate ? queryStr += '&populate=' + populate : null;
+    } else {
+        populate ? queryStr = '?populate=' + populate : null;
     }
     const response = await api.get('/candidates' + queryStr);
+    console.log(response.data);
     return response.data;
 };
 
