@@ -35,6 +35,13 @@ function ListItems({
 		setIsDeleteModalOpen(false);
 	};
 
+	const getDisplayValue = (item, field) => {
+		if (typeof item[field.name] === 'object') {
+			return item[field.name]?.name;
+		}
+		return item[field.name];
+	};
+
 	return (
 		<div className="card bg-primary text-primary-content min-h-80 max-h-full">
 			<div className="card-body flex flex-col items-center justify-center overflow-auto">
@@ -42,8 +49,8 @@ function ListItems({
 					<table className="table table-zebra-zebra">
 						<thead>
 							<tr>
-								{columns.map((col) => (
-									<th key={col}>{col}</th>
+								{fields.map((field) => (
+									<th key={field.name}>{field.label}</th>
 								))}
 								<th></th>
 								<th></th>
@@ -52,13 +59,13 @@ function ListItems({
 						<tbody>
 							{items.length === 0 && (
 								<tr>
-									<td colSpan={columns.length + 2}>No {itemType} found.</td>
+									<td colSpan={fields.length + 2}>No {itemType} found.</td>
 								</tr>
 							)}
 							{items.map((item) => (
 								<tr key={item._id}>
-									{columns.map((col) => (
-										<td key={col}>{item[col]}</td>
+									{fields.map((field) => (
+										<td key={field.name}>{getDisplayValue(item, field)}</td>
 									))}
 									<td>
 										<button
@@ -106,10 +113,13 @@ function ListItems({
 }
 
 ListItems.propTypes = {
-	items: PropTypes.array.isRequired, // array of items to display
-	fetchItemsData: PropTypes.func.isRequired, // function to fetch items data
-	itemType: PropTypes.string.isRequired, // type of item (e.g. 'Candidates')
-	columns: PropTypes.array.isRequired, // columns to display in the table
+	items: PropTypes.array.isRequired,
+	fetchItemsData: PropTypes.func.isRequired,
+	itemType: PropTypes.string.isRequired,
+	columns: PropTypes.array.isRequired,
+	deleteItem: PropTypes.func.isRequired,
+	fields: PropTypes.array.isRequired,
+	updateItem: PropTypes.func.isRequired,
 };
 
 export default ListItems;

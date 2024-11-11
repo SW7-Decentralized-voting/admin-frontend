@@ -35,6 +35,10 @@ function EditItemModal({
     if (item) {
       const initialData = {};
       formFields.forEach((field) => {
+				if (typeof item[field.name] === 'object') {
+					initialData[field.name] = item[field.name]?._id || '';
+					return;
+				}
         initialData[field.name] = item[field.name] || '';
       });
       setFormData(initialData);
@@ -108,7 +112,7 @@ function EditItemModal({
                     </select>
                   ) : (
                     <input
-                      type="text"
+                      type={field.type || 'text'}
                       value={formData[field.name] || ''}
                       onChange={(e) => handleChange(field, e.target.value)}
                       className="input input-bordered w-full"
