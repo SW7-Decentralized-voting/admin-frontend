@@ -11,7 +11,6 @@ export const getPartyCandidates = async (partyId) => {
         queryStr = '?party=' + partyId;
     }
     const response = await api.get('/candidates' + queryStr);
-    console.log(response);
     return response.data;
 };
 

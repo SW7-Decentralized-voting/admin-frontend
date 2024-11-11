@@ -39,9 +39,14 @@ function EditItemModal({
       });
       setFormData(initialData);
     }
-  }, [item, formFields]);
+  }, [item]);
 
   const handleChange = (field, value) => {
+		console.log(field, value);
+		console.log({
+			...formData,
+			[field.name]: value
+		})
     setFormData((prevData) => ({
       ...prevData,
       [field.name]: value,
@@ -63,9 +68,9 @@ function EditItemModal({
 		}
 
     try {
-      await updateItem(item._id, formData); // Assume updateItem is passed as prop
+      await updateItem(item._id, formData);
       toast.success(`${itemName} updated successfully!`);
-      onSave();
+      await onSave();
       onRequestClose();
     } catch (error) {
       console.error(error);
