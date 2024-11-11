@@ -3,7 +3,7 @@ import Header from '../../components/misc/Header';
 import AddItem from '../../components/AddObject';
 import { addCandidate, getParties, getNominationDistricts, getPartyCandidates, updateCandidate, deleteCandidate } from '../../API';
 import ListItems from '../../components/ListItems';
-
+import { toast } from 'react-hot-toast';
 
 function CandidateScreen() {
   const [refreshList, setRefreshList] = useState(false);
@@ -15,7 +15,7 @@ function CandidateScreen() {
 
   const fetchCandidates = async () => {
     try {
-      const candidates = await getPartyCandidates();
+      const candidates = await getPartyCandidates(null, ['party', 'nominationDistrict']);
       return candidates;
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -26,11 +26,11 @@ function CandidateScreen() {
 
   useEffect(() => {
     fetchCandidates().then((candidates) => {
-      if (candidates.length > 0) {
+      if (candidates?.length > 0) {
         setCandidates(candidates);
       }
     });
-  }, [refreshList, candidates]);
+  }, [refreshList]);
 
   const fields = [
     {
@@ -46,11 +46,10 @@ function CandidateScreen() {
       <Header title="Candidate Management" />
       <div className="flex flex-row justify-center items-start gap-4 h-4/5">
         <AddItem onItemAdded={handleCandidateAdded} addData={addCandidate} itemType='Candidate' fields={fields} />
-        <ListItems 
-          items={candidates} 
-          fetchItemsData={fetchCandidates} 
-          itemType='Candidate' 
-          columns={['name', 'party', 'nominationDistrict']} 
+        <ListItems
+          items={candidates}
+          fetchItemsData={handleCandidateAdded}
+          itemType='Candidate'
           fields={fields}
           updateItem={updateCandidate}
           deleteItem={deleteCandidate}

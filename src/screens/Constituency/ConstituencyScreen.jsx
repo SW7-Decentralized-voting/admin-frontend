@@ -26,7 +26,7 @@ function ConstituencyScreen() {
 
   useEffect(() => {
     fetchConstituencies();
-  }, [refreshList, constituencies]);
+  }, [refreshList]);
 
   const fields = [
     { name: 'name', type: 'text', label: 'Name', required: true, validate: (value) => value.length >= 3 && value.length <= 100, validateError: 'Constituency name must be between 3 and 100 characters.' }
@@ -39,9 +39,8 @@ function ConstituencyScreen() {
         <AddItem onItemAdded={handleConstituencyAdded} addData={addConstituency} itemType='Constituency' fields={fields} />
         <ListItems
           items={constituencies}
-          fetchItemsData={fetchConstituencies}
+          fetchItemsData={handleConstituencyAdded}
           itemType='Constituency'
-          columns={['name']}
           fields={fields}
           updateItem={updateConstituency}
           deleteItem={deleteConstituency}
