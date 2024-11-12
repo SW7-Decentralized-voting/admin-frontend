@@ -40,7 +40,7 @@ function NominationDistrictScreen() {
   return (
     <div className="flex flex-col w-full h-screen items-center justify-evenly">
       <Header title="Nomination District Management" />
-      <div className="flex flex-row justify-center items-start gap-4 h-4/5">
+      <div className="flex flex-row justify-center items-start gap-4 h-4/5 w-4/5">
         <AddItem onItemAdded={handleNominationDistrictAdded} addData={addNominationDistrict} itemType='Nomination District' fields={fields} />
         <ListItems
           items={nominationDistricts}

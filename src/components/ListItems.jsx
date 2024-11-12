@@ -42,9 +42,9 @@ function ListItems({
 	};
 
 	return (
-		<div className="card bg-primary text-primary-content min-h-80 max-h-full">
-			<div className="card-body flex flex-col items-center justify-center overflow-auto">
-				<div className="overflow-auto bg-secondary rounded-sm">
+		<div className="card bg-primary text-primary-content h-full w-2/3">
+			<div className="card-body flex flex-col items-center justify-top h-full overflow-auto">
+				<div className="overflow-auto bg-secondary rounded-sm w-full">
 					<table className="table table-zebra-zebra">
 						<thead>
 							<tr>
@@ -64,9 +64,9 @@ function ListItems({
 							{items.map((item) => (
 								<tr key={item._id}>
 									{fields.map((field) => (
-										<td key={field.name}>{getDisplayValue(item, field)}</td>
+										<td className='' key={field.name}>{getDisplayValue(item, field)}</td>
 									))}
-									<td>
+									<td className='w-min whitespace-nowrap px-0 text-right w-0'>
 										<button
 											className="btn"
 											onClick={() => openEditModal(item)}
@@ -74,7 +74,7 @@ function ListItems({
 											<FaEdit />
 										</button>
 									</td>
-									<td>
+									<td className='whitespace-nowrap w-min text-right w-0'>
 										<button
 											className="btn btn-error"
 											onClick={() => openDeleteModal(item)}

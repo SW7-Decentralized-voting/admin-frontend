@@ -41,7 +41,7 @@ function PollingStationScreen() {
   return (
     <div className='flex flex-col w-full h-screen items-center justify-evenly'>
       <Header title='Polling Station Management' />
-      <div className='flex flex-row justify-center items-start gap-4 h-4/5'>
+      <div className='flex flex-row justify-center items-start gap-4 h-4/5 w-4/5'>
         <AddItem onItemAdded={handlePollingStationAdded} addData={addPollingStation} itemType='Polling Station' fields={fields} />
         <ListItems
           items={pollingStations}
