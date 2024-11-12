@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../../API';
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from 'jwt-decode';
 
 function LoginScreen() {
   const [password, setPassword] = useState('');
@@ -27,8 +27,7 @@ function LoginScreen() {
     try {
       const decoded = jwtDecode(token);
       return decoded.exp ? new Date(decoded.exp * 1000) : null;
-    } catch (error) {
-      console.error("Invalid JWT format:", error);
+    } catch {
       return null;
     }
   }
@@ -55,8 +54,8 @@ function LoginScreen() {
               Password
               <input
                 className='grow bg-white'
-                type="password"
-                id="password"
+                type='password'
+                id='password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
