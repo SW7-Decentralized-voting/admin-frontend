@@ -25,7 +25,7 @@ function LoginScreen() {
 
   function getJwtExpiration(token) {
     try {
-      const decoded = jwt_decode(token);
+      const decoded = jwtDecode(token);
       return decoded.exp ? new Date(decoded.exp * 1000) : null;
     } catch (error) {
       console.error("Invalid JWT format:", error);
