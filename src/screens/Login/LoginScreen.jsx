@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../../API';
+import {jwtDecode} from "jwt-decode";
 
 function LoginScreen() {
   const [password, setPassword] = useState('');
@@ -21,6 +22,26 @@ function LoginScreen() {
     sessionStorage.setItem('jwt', token);
     navigate('/home');
   };
+
+  function getJwtExpiration(token) {
+    try {
+      const decoded = jwt_decode(token);
+      return decoded.exp ? new Date(decoded.exp * 1000) : null;
+    } catch (error) {
+      console.error("Invalid JWT format:", error);
+      return null;
+    }
+  }
+
+  useEffect(() => {
+    if (sessionStorage.getItem('jwt')) {
+      if (getJwtExpiration(sessionStorage.getItem('jwt')) > new Date()) {
+        navigate('/home');
+      } else {
+        sessionStorage.removeItem('jwt');
+      }
+    }
+  });
 
   return (
     <div className='flex flex-1 justify-center items-center w-full h-screen'>

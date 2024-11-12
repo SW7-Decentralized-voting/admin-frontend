@@ -48,7 +48,7 @@ function DeleteItemModal({
 DeleteItemModal.propTypes = {
 	isOpen: PropTypes.bool.isRequired,
 	onRequestClose: PropTypes.func.isRequired,
-	item: PropTypes.object.isRequired,
+	item: PropTypes.object,
 	onSave: PropTypes.func.isRequired,
 	itemType: PropTypes.string.isRequired,
 	deleteItemFunc: PropTypes.func.isRequired,
