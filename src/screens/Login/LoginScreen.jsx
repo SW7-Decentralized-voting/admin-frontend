@@ -1,28 +1,46 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../utils/useAuth';
+import { login } from '../../API';
+import { jwtDecode } from 'jwt-decode';
 
 function LoginScreen() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { login } = useAuth();
 
   // This is the hardcoded password for demonstration purposes.
   // In a real app, you would use a more secure method of authentication.
-  const correctPassword = 'password'; 
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    
-    // Check if the entered password matches
-    if (password === correctPassword) {
-      login(); // Log the user in via context
-      navigate('/home');
-    } else {
-      setError('Invalid password. Please try again.');
+
+    const token = await login(e.target.password.value);
+    if (!token) {
+      setError('Invalid password');
+      return;
     }
+    sessionStorage.setItem('jwt', token);
+    navigate('/home');
   };
+
+  function getJwtExpiration(token) {
+    try {
+      const decoded = jwtDecode(token);
+      return decoded.exp ? new Date(decoded.exp * 1000) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  useEffect(() => {
+    if (sessionStorage.getItem('jwt')) {
+      if (getJwtExpiration(sessionStorage.getItem('jwt')) > new Date()) {
+        navigate('/home');
+      } else {
+        sessionStorage.removeItem('jwt');
+      }
+    }
+  });
 
   return (
     <div className='flex flex-1 justify-center items-center w-full h-screen'>
@@ -36,8 +54,8 @@ function LoginScreen() {
               Password
               <input
                 className='grow bg-white'
-                type="password"
-                id="password"
+                type='password'
+                id='password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
