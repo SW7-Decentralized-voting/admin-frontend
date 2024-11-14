@@ -4,9 +4,10 @@ import jest from 'eslint-plugin-jest';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
+import jsdoc from 'eslint-plugin-jsdoc';
 
 export default [
-  { ignores: ['dist'] },
+  { ignores: ['dist', 'tailwind.config.js', 'postcss.config.js'] },
   {
     files: ['**/*.{js,jsx}'],
     languageOptions: {
@@ -43,6 +44,13 @@ export default [
       'no-constant-condition': 'error',
       'no-empty': 'error',
     },
+  },
+  {
+    files: ['**/*.js'],
+    plugins: { jsdoc },
+    rules: {
+      ...jsdoc.configs.recommended.rules,
+    }
   },
   {
     files: ['__test__/*', '**/*.test.js'],

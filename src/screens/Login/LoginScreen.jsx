@@ -1,46 +1,70 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../utils/useAuth';
-import './LoginScreen.css';
+import { login } from '../../API';
+import { jwtDecode } from 'jwt-decode';
 
 function LoginScreen() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { login } = useAuth();
 
   // This is the hardcoded password for demonstration purposes.
   // In a real app, you would use a more secure method of authentication.
-  const correctPassword = 'password'; 
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    
-    // Check if the entered password matches
-    if (password === correctPassword) {
-      login(); // Log the user in via context
-      navigate('/home');
-    } else {
-      setError('Invalid password. Please try again.');
+
+    const token = await login(e.target.password.value);
+    if (!token) {
+      setError('Invalid password');
+      return;
     }
+    sessionStorage.setItem('jwt', token);
+    navigate('/home');
   };
 
+  function getJwtExpiration(token) {
+    try {
+      const decoded = jwtDecode(token);
+      return decoded.exp ? new Date(decoded.exp * 1000) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  useEffect(() => {
+    if (sessionStorage.getItem('jwt')) {
+      if (getJwtExpiration(sessionStorage.getItem('jwt')) > new Date()) {
+        navigate('/home');
+      } else {
+        sessionStorage.removeItem('jwt');
+      }
+    }
+  });
+
   return (
-    <div className="login-container">
-      <h2>Login</h2>
+    <div className='flex flex-1 justify-center items-center w-full h-screen'>
       <form onSubmit={handleLogin}>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+        <div className='card bg-primary text-primary-content w-96'>
+          <div className='card-body'>
+            <h2 className='card-title'>
+              Admin
+            </h2>
+            <label htmlFor='password' className='input input-bordered flex items-center gap-2'>
+              Password
+              <input
+                className='grow bg-white'
+                type='password'
+                id='password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </label>
+            {error && <p className='text-red-800'>{error}</p>}
+            <button className='btn btn-secondary' type='submit'>Login</button>
+          </div>
         </div>
-        {error && <p className="error-message">{error}</p>}
-        <button type="submit">Login</button>
       </form>
     </div>
   );
