@@ -121,11 +121,12 @@ function AddItem({
 								)}
 							</div>
 						))}
+						<button type="submit" className="btn btn-secondary w-full">
+							<FaSave /> Save
+						</button>
 					</form>
 				</div>
-				<button type="submit" className="btn btn-secondary w-full">
-					<FaSave /> Save
-				</button>
+
 
 			</div>
 		</div>
