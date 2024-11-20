@@ -1,25 +1,24 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add('getToken', () => {
+  const fakeJWT = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.fakePayload.fakeSignature';
+
+  // Mock the login API request to return the fake token
+  cy.intercept('POST', '/api/login', (req) => {
+    req.reply({
+      statusCode: 200,
+      body: { token: fakeJWT },
+    });
+  }).as('mockLogin');
+
+  // Make a request to the login endpoint or mock the behavior
+  return cy.request({
+    method: 'POST',
+    url: Cypress.env('BACKEND_URL') + '/api/login',
+    body: {
+      username: 'testuser',
+      password: 'password123',
+    },
+  }).then(() => {
+    // Return the token for further usage
+    return fakeJWT; // Use `response.body.token` if fetching a real token
+  });
+});
