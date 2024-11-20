@@ -1,19 +1,24 @@
 import { toast } from 'react-hot-toast';
-import { deleteNominationDistrict } from '../../API';
-
 import PropTypes from 'prop-types';
 
-function DeleteDistrictModal({ isOpen, onRequestClose, district, onSave }) {
+function DeleteItemModal({
+  isOpen,
+  onRequestClose,
+  item,
+  onSave,
+	itemType,
+	deleteItemFunc,
+}) {
   const handleDelete = async () => {
     try {
-      await deleteNominationDistrict(district._id);
-      toast.success('District deleted successfully!');
+      await deleteItemFunc(item._id);
+      toast.success(`${itemType}: ${item.name} was deleted successfully!`);
       onSave();
       onRequestClose();
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
-      toast.error('Failed to delete district. Please try again.');
+      toast.error(`Failed to delete ${itemType}. Please try again.`);
     }
   };
 
@@ -23,7 +28,9 @@ function DeleteDistrictModal({ isOpen, onRequestClose, district, onSave }) {
         <div className="modal modal-open">
           <div className="modal-box">
             <h2 className="text-2xl font-bold mb-4">Are you sure?</h2>
-            <p>Do you really want to delete <strong>{district?.name}</strong>?</p>
+            <p>
+              Do you really want to delete <strong>{item?.name}</strong>?
+            </p>
             <div className="modal-action">
               <button className="btn btn-warning" onClick={handleDelete}>
                 Yes, Delete
@@ -38,12 +45,13 @@ function DeleteDistrictModal({ isOpen, onRequestClose, district, onSave }) {
     </>
   );
 }
-
-DeleteDistrictModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onRequestClose: PropTypes.func.isRequired,
-  district: PropTypes.object,
-  onSave: PropTypes.func.isRequired,
+DeleteItemModal.propTypes = {
+	isOpen: PropTypes.bool.isRequired,
+	onRequestClose: PropTypes.func.isRequired,
+	item: PropTypes.object,
+	onSave: PropTypes.func.isRequired,
+	itemType: PropTypes.string.isRequired,
+	deleteItemFunc: PropTypes.func.isRequired,
 };
 
-export default DeleteDistrictModal;
+export default DeleteItemModal;
