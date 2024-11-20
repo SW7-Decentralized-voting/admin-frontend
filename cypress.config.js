@@ -22,7 +22,6 @@ export default defineConfig({
   },
   env: {
     BACKEND_URL: process.env.VITE_API_URL,
-    CYPRESS_PASSWORD: process.env.PASSWORD
   },
   hosts: {
     'cypress-secure': '127.0.0.1'
