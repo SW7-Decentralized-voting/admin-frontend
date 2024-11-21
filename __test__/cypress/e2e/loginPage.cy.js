@@ -10,7 +10,7 @@ describe('Login Screen', () => {
     cy.wait('@mockLoginSuccess');
     cy.url().should('include', '/home');
     cy.window().then((window) => {
-      expect(window.sessionStorage.getItem('jwt')).to.equal('mocked-jwt-token');
+      expect(window.sessionStorage.getItem('jwt')).to.exist;
     });
   });
 

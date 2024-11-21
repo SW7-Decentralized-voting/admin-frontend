@@ -7,7 +7,7 @@ function ProtectedRoute({ children }) {
   if (typeof sessionStorage.getItem('jwt') === 'string' && jwtDecode(sessionStorage.getItem('jwt')).exp > new Date().getTime() / 1000) {
     return children;
   }
-  
+
   toast.error('Session expired. Please login again.');
   sessionStorage.removeItem('jwt');
   return <Navigate to="/login" />;
