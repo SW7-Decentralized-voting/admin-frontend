@@ -1,0 +1,12 @@
+[
+  {
+    "_id": 1,
+    "name": "Banan-distriktet",
+    "constituency": 1
+  },
+  {
+    "_id": 2,
+    "name": "Kakao-distriktet",
+    "constituency": 2
+  }
+]
