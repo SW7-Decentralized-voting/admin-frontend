@@ -5,6 +5,8 @@ import api from './api';
  * @returns {Promise<Array<Party>>} List of parties
  */
 export const getParties = async () => {
+    //eslint-disable-next-line no-console
+    console.log('abe');
     const response = await api.get('/parties');
     return response.data;
 };

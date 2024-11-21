@@ -25,5 +25,5 @@ export default defineConfig({
   },
   hosts: {
     'cypress-secure': '127.0.0.1'
-  }
+  },
 });

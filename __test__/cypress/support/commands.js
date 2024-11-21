@@ -1,24 +1,52 @@
-Cypress.Commands.add('getToken', () => {
-  const fakeJWT = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.fakePayload.fakeSignature';
+// UTILS
+const fakeJWT = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlBsYXlib2kgQ2FydGkiLCJpYXQiOjE1MTYyMzkwMjJ9.OuBDA5BeAyz5Ss22m_lsVfZOQjI9rreNq1nlGwinO88';
 
-  // Mock the login API request to return the fake token
-  cy.intercept('POST', '/api/login', (req) => {
-    req.reply({
-      statusCode: 200,
-      body: { token: fakeJWT },
-    });
-  }).as('mockLogin');
-
-  // Make a request to the login endpoint or mock the behavior
-  return cy.request({
-    method: 'POST',
-    url: Cypress.env('BACKEND_URL') + '/api/login',
-    body: {
-      username: 'testuser',
-      password: 'password123',
-    },
-  }).then(() => {
-    // Return the token for further usage
-    return fakeJWT; // Use `response.body.token` if fetching a real token
+Cypress.Commands.add('clearToken', () => {
+  cy.window().then(() => {
+    window.sessionStorage.clear();
   });
 });
+
+Cypress.Commands.add('setToken', () => {
+  cy.window().then(() => {
+    window.sessionStorage.setItem('jwt', fakeJWT);
+  });
+});
+
+
+// LOGIN PAGE
+Cypress.Commands.add('mockLoginSuccess', () => {
+  cy.intercept('POST', Cypress.env('BACKEND_URL') + '/login', {
+    statusCode: 200,
+    body: {
+      token: 'mocked-jwt-token',
+    },
+  }).as('mockLoginSuccess');
+  cy.window().then((window) => {
+    window.sessionStorage.setItem('jwt', 'mocked-token');
+  });
+});
+
+Cypress.Commands.add('mockLoginFailure', () => {
+  cy.intercept('POST', Cypress.env('BACKEND_URL') + '/login', {
+    statusCode: 401,
+    body: {
+      error: 'Invalid password',
+    },
+  }).as('mockLoginFailure');
+});
+
+
+// CANDIDATE PAGE
+Cypress.Commands.add('mockGetPartiesSuccess', () => {
+  cy.fixture('parties').then((parties) => {
+    cy.intercept('GET', Cypress.env('BACKEND_URL') + '/parties', {
+      statusCode: 200,
+      body: parties,
+    }).as('mockGetPartiesSuccess');
+  });
+});
+
+
+// 
+
