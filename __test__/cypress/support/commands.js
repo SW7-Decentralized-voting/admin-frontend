@@ -109,33 +109,38 @@ Cypress.Commands.add('mockGetNominationDistrictsFail', (content) => {
 
 // CANDIDATE PAGE
 Cypress.Commands.add('mockGetCandidatesSuccess', (content) => {
-  cy.intercept('GET', BACKEND_URL + '/candidate*', {
+  cy.intercept('GET', BACKEND_URL + '/candidates*', {
     statusCode: 200,
     body: content,
   }).as('mockGetCandidatesSuccess');
 });
 
 Cypress.Commands.add('mockGetCandidatesFail', (content) => {
-  cy.intercept('GET', BACKEND_URL + '/candidate*', {
+  cy.intercept('GET', BACKEND_URL + '/candidates*', {
     statusCode: 401,
     body: content,
   }).as('mockGetCandidatesFail');
 });
 
 Cypress.Commands.add('mockAddCandidate', () => {
-  cy.intercept('POST', BACKEND_URL + '/candidate*', {
+  cy.intercept('POST', BACKEND_URL + '/candidates*', {
     statusCode: 201,
     body: { message: 'Candidate added successfully!' },
   }).as('mockAddCandidate');
 });
 
-Cypress.Commands.add('mockGetCandidatesAfterAdd', () => {
-  cy.fixture('candidatesNewEntry').then((content) => {
-    cy.intercept('GET', BACKEND_URL + '/candidate*', {
-      statusCode: 200,
-      body: content,
-    }).as('mockGetCandidatesAfterAdd');
-  });
+Cypress.Commands.add('mockGetCandidatesAfter', (content) => {
+  cy.intercept('GET', BACKEND_URL + '/candidates*', {
+    statusCode: 200,
+    body: content,
+  }).as('mockGetCandidatesAfter');
+});
+
+Cypress.Commands.add('mockDeleteCandidate', (id) => {
+  cy.intercept('DELETE', BACKEND_URL + '/candidates/' + id, {
+    statusCode: 200,
+    body: { message: 'Candidate deleted successfully!' },
+  }).as('mockDeleteCandidate');
 });
 
 // CONSTIUENCY PAGE

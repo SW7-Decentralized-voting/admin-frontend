@@ -113,7 +113,7 @@ describe('CandidateScreen', () => {
 
     cy.mockAddCandidate();
     cy.fixture('candidatesNewEntry').then((content) => {
-      cy.mockGetCandidatesAfterAdd(content);
+      cy.mockGetCandidatesAfter(content);
     });
 
     cy.get('form').within(() => {
@@ -131,7 +131,7 @@ describe('CandidateScreen', () => {
     cy.wait('@mockAddCandidate');
     cy.contains('Candidate added successfully!').should('be.visible');
 
-    cy.wait('@mockGetCandidatesAfterAdd');
+    cy.wait('@mockGetCandidatesAfter');
     cy.get('.card-body table tbody tr').should('have.length', 1);
     cy.get('.card-body table tbody tr')
       .first()
@@ -242,5 +242,38 @@ describe('CandidateScreen', () => {
     cy.get('form button[type="submit"]').should('exist').click();
     cy.contains('Nomination District is required.')
       .should('be.visible');
+  });
+
+  it('should delete a candidate from the list', () => {
+    cy.fixture('candidatesNewEntry').then((content) => {
+      cy.mockGetCandidatesSuccess(content);
+    });
+    cy.fixture('parties').then((content) => {
+      cy.mockGetPartiesSuccess(content);
+    });
+    cy.fixture('nominationDistricts').then((content) => {
+      cy.mockGetNominationDistrictsSuccess(content);
+    });
+
+    cy.visit('/candidate');
+    cy.wait('@mockGetCandidatesSuccess');
+    cy.wait('@mockGetPartiesSuccess');
+    cy.wait('@mockGetNominationDistrictsSuccess');
+    cy.get('.card-body table tbody tr').should('have.length', 1);
+
+    cy.get('button.btn-error').click();
+    cy.get('.modal.modal-open').should('be.visible');
+    cy.get('.modal-box').should('contain', 'Are you sure?');
+    cy.get('.modal-box').should('contain', 'Do you really want to delete Test Man?');
+
+    cy.mockDeleteCandidate(1);
+    cy.mockGetCandidatesAfter([]);
+
+    cy.get('.modal-box .btn-warning').click();
+    cy.wait('@mockDeleteCandidate');
+    cy.contains('Candidate: Test Man was deleted successfully!').should('be.visible');
+
+    cy.wait('@mockGetCandidatesAfter');
+    cy.get('.card-body table tbody').should('contain', 'No Candidate found.');
   });
 });
