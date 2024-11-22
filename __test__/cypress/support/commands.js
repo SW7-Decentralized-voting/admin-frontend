@@ -96,18 +96,18 @@ Cypress.Commands.add('mockGetNominationDistrictsFail', (content) => {
 
 
 // CANDIDATE PAGE
-Cypress.Commands.add('mockGetPartyCandidatesSuccess', (content) => {
+Cypress.Commands.add('mockGetCandidatesSuccess', (content) => {
   cy.intercept('GET', BACKEND_URL + '/candidate*', {
     statusCode: 200,
     body: content,
-  }).as('mockGetPartyCandidatesSuccess');
+  }).as('mockGetCandidatesSuccess');
 });
 
-Cypress.Commands.add('mockGetPartyCandidatesFail', (content) => {
+Cypress.Commands.add('mockGetCandidatesFail', (content) => {
   cy.intercept('GET', BACKEND_URL + '/candidate*', {
     statusCode: 401,
     body: content,
-  }).as('mockGetPartyCandidatesFail');
+  }).as('mockGetCandidatesFail');
 });
 
 // CONSTIUENCY PAGE

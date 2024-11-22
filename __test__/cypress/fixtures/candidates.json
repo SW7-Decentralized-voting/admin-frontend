@@ -1,22 +1,22 @@
 [
 	{
 		"name": "Bettina Bendtsen",
-		"party": "67122e0533de8228a9e48a28",
-		"nominationDistrict": "District 1"
+		"party": "Nordlisten",
+		"nominationDistrict": "Banan-distriktet"
 	}, 
 	{
 		"name": "Fanny Findsen",
-		"party": "67122e0533de8228a9e48a28",
-		"nominationDistrict": "District 1"
+		"party": "Sydlisten",
+		"nominationDistrict": "Banan-distriktet"
 	},
 	{
 		"name": "Henrik Hansen",
-		"party": "67122e0533de8228a9e48a28",
-		"nominationDistrict": "District 1"
+		"party": "Vestpartiet",
+		"nominationDistrict": "Kakao-distriktet"
 	},
 	{
 		"name": "Mette Madsen",
-		"party": "67122e0533de8228a9e48a28",
-		"nominationDistrict": "District 1"
+		"party": "Østpartiet",
+		"nominationDistrict": "Kakao-distriktet"
 	}
 ]
