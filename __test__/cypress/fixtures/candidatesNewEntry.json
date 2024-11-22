@@ -1,6 +1,7 @@
 [
   {
-		"name": "Test Man",
+		"_id": 1,
+    "name": "Test Man",
 		"party": "Nordlisten",
 		"nominationDistrict": "Banan-distriktet"
 	}
