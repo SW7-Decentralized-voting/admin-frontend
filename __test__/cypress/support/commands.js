@@ -39,7 +39,7 @@ Cypress.Commands.add('mockLoginFailure', () => {
 // PARTY PAGE
 Cypress.Commands.add('mockGetPartiesSuccess', () => {
   cy.fixture('parties').then((parties) => {
-    cy.intercept('GET', BACKEND_URL + '/parties', {
+    cy.intercept('GET', BACKEND_URL + '/parties*', {
       statusCode: 200,
       body: parties,
     }).as('mockGetPartiesSuccess');
@@ -76,4 +76,35 @@ Cypress.Commands.add('mockGetNominationDistrictsFail', (content) => {
     statusCode: 401,
     body: content,
   }).as('mockGetNominationDistrictsFail');
+});
+
+
+// CANDIDATE PAGE
+Cypress.Commands.add('mockGetPartyCandidatesSuccess', (content) => {
+  cy.intercept('GET', BACKEND_URL + '/candidate*', {
+    statusCode: 200,
+    body: content,
+  }).as('mockGetPartyCandidatesSuccess');
+});
+
+Cypress.Commands.add('mockGetPartyCandidatesFail', (content) => {
+  cy.intercept('GET', BACKEND_URL + '/candidate*', {
+    statusCode: 401,
+    body: content,
+  }).as('mockGetPartyCandidatesFail');
+});
+
+// CONSTIUENCY PAGE
+Cypress.Commands.add('mockGetConstituencySuccess', (content) => {
+  cy.intercept('GET', BACKEND_URL + '/constituency*', {
+    statusCode: 200,
+    body: content,
+  }).as('mockGetConstituencySuccess');
+});
+
+Cypress.Commands.add('mockGetConstituencyFail', (content) => {
+  cy.intercept('GET', BACKEND_URL + '/constituency*', {
+    statusCode: 401,
+    body: content,
+  }).as('mockGetConstituencyFail');
 });
