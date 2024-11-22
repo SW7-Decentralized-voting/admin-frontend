@@ -77,7 +77,9 @@ describe('PollingStationScreen', () => {
     cy.get('.card-body table tbody').should('contain', 'No Polling Station found.');
 
     cy.mockAddPollingStation();
-    cy.mockGetPollingStationsAfterAdd();
+    cy.fixture('pollingStationsNewEntry').then((content) => {
+      cy.mockGetPollingStationsAfter(content);
+    });
 
     cy.get('form').within(() => {
       cy.get('input#name').should('exist').type('Krabbe-station');
@@ -91,7 +93,7 @@ describe('PollingStationScreen', () => {
     cy.wait('@mockAddPollingStation');
     cy.contains('Polling Station added successfully!').should('be.visible');
 
-    cy.wait('@mockGetPollingStationsAfterAdd');
+    cy.wait('@mockGetPollingStationsAfter');
     cy.get('.card-body table tbody tr').should('have.length', 1);
     cy.get('.card-body table tbody tr')
       .first()
@@ -256,5 +258,69 @@ describe('PollingStationScreen', () => {
 
     cy.contains('Name is required.')
       .should('be.visible');
+  });
+
+
+  it('should delete an object from the list with a single element', () => {
+    cy.fixture('pollingStationsNewEntry').then((content) => {
+      cy.mockGetPollingStationsSuccess(content);
+    });
+    cy.fixture('nominationDistricts').then((content) => {
+      cy.mockGetNominationDistrictsSuccess(content);
+    });
+  
+    cy.visit('/polling-station');
+    cy.wait('@mockGetPollingStationsSuccess');
+    cy.wait('@mockGetNominationDistrictsSuccess');
+    cy.get('.card-body table tbody tr').should('have.length', 1);
+  
+    cy.get('button.btn-error').click();
+    cy.get('.modal.modal-open').should('be.visible');
+    cy.get('.modal-box').should('contain', 'Are you sure?');
+    cy.get('.modal-box').should('contain', 'Do you really want to delete Krabbe-station?');
+  
+    cy.mockDeletePollingStation(1);
+    cy.mockGetPollingStationsAfter([]);
+  
+    cy.get('.modal-box .btn-warning').click();
+    cy.wait('@mockDeletePollingStation');
+    cy.contains('Polling Station: Krabbe-station was deleted successfully!').should('be.visible');
+  
+    cy.wait('@mockGetPollingStationsAfter')
+    cy.get('.card-body table tbody').should('contain', 'No Polling Station found.');
+  });
+
+  it('should delete an object from the list with multiple elements', () => {
+    cy.fixture('pollingStations').then((content) => {
+      cy.mockGetPollingStationsSuccess(content);
+    });
+    cy.fixture('nominationDistricts').then((content) => {
+      cy.mockGetNominationDistrictsSuccess(content);
+    });
+  
+    cy.visit('/polling-station');
+    cy.wait('@mockGetPollingStationsSuccess');
+    cy.wait('@mockGetNominationDistrictsSuccess');
+    cy.get('.card-body table tbody tr').should('have.length', 2);
+  
+    cy.get('button.btn-error').eq(0).click();
+    cy.get('.modal.modal-open').should('be.visible');
+    cy.get('.modal-box').should('contain', 'Are you sure?');
+    cy.get('.modal-box').should('contain', 'Do you really want to delete Abe-station?');
+  
+    cy.mockDeletePollingStation(1);
+    cy.mockGetPollingStationsAfter([{ _id: 2, name: 'Fugle-station', nominationDistrict: { _id: 2, name: 'Kakao-distriktet' }, expectedVoters: 20 }]);
+  
+    cy.get('.modal-box .btn-warning').click();
+    cy.wait('@mockDeletePollingStation');
+    cy.contains('Polling Station: Abe-station was deleted successfully!').should('be.visible');
+  
+    cy.wait('@mockGetPollingStationsAfter')
+    cy.get('.card-body table tbody tr').should('have.length', 1);
+    cy.get('.card-body table tbody tr').eq(0).within(() => {
+      cy.get('td').eq(0).should('contain', 'Fugle-station');
+      cy.get('td').eq(1).should('contain', 'Kakao-distriktet');
+      cy.get('td').eq(2).should('contain', '20');
+    });
   });
 });

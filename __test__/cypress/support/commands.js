@@ -69,13 +69,18 @@ Cypress.Commands.add('mockAddPollingStation', () => {
   }).as('mockAddPollingStation');
 });
 
-Cypress.Commands.add('mockGetPollingStationsAfterAdd', () => {
-  cy.fixture('pollingStationsNewEntry').then((content) => {
-    cy.intercept('GET', BACKEND_URL + '/pollingStations*', {
-      statusCode: 200,
-      body: content,
-    }).as('mockGetPollingStationsAfterAdd');
-  });
+Cypress.Commands.add('mockGetPollingStationsAfter', (content) => {
+  cy.intercept('GET', BACKEND_URL + '/pollingStations*', {
+    statusCode: 200,
+    body: content,
+  }).as('mockGetPollingStationsAfter');
+});
+
+Cypress.Commands.add('mockDeletePollingStation', (id) => {
+  cy.intercept('DELETE', BACKEND_URL + '/pollingStations/' + id, {
+    statusCode: 200,
+    body: { message: 'Polling Station deleted successfully!' },
+  }).as('mockDeletePollingStation');
 });
 
 

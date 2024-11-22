@@ -5,7 +5,7 @@ import EditItemModal from './EditItemModal';
 import DeleteItemModal from './DeleteItemModal';
 
 function ListItems({
-	items,
+	items = [],
 	fetchItemsData,
 	itemType,
 	deleteItem,
@@ -56,7 +56,7 @@ function ListItems({
 							</tr>
 						</thead>
 						<tbody>
-							{items.length === 0 && (
+							{!items || items.length === 0 && (
 								<tr>
 									<td colSpan={fields.length + 2}>No {itemType} found.</td>
 								</tr>
