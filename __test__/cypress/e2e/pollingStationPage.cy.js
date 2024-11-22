@@ -310,8 +310,9 @@ describe('PollingStationScreen', () => {
     cy.get('.modal-box').should('contain', 'Do you really want to delete Abe-station?');
 
     cy.mockDeletePollingStation(1);
-    cy.mockGetPollingStationsAfter([{ _id: 2, name: 'Fugle-station', nominationDistrict: { _id: 2, name: 'Kakao-distriktet' }, expectedVoters: 20 }]);
-
+    cy.fixture('pollingStations2').then((content) => {
+      cy.mockGetPollingStationsAfter(content);
+    });
     cy.get('.modal-box .btn-warning').click();
     cy.wait('@mockDeletePollingStation');
     cy.contains('Polling Station: Abe-station was deleted successfully!').should('be.visible');
