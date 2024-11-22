@@ -62,6 +62,22 @@ Cypress.Commands.add('mockGetPollingStationsFail', (content) => {
   }).as('mockGetPollingStationsFail');
 });
 
+Cypress.Commands.add('mockAddPollingStation', () => {
+  cy.intercept('POST', BACKEND_URL + '/pollingStations*', {
+    statusCode: 201,
+    body: { message: 'Polling Station added successfully!' },
+  }).as('mockAddPollingStation');
+});
+
+Cypress.Commands.add('mockGetPollingStationsAfterAdd', () => {
+  cy.fixture('pollingStationsNewEntry').then((content) => {
+    cy.intercept('GET', BACKEND_URL + '/pollingStations*', {
+      statusCode: 200,
+      body: content,
+    }).as('mockGetPollingStationsAfterAdd');
+  });
+});
+
 
 // NOMINATION DISTRICT PAGE
 Cypress.Commands.add('mockGetNominationDistrictsSuccess', (content) => {
