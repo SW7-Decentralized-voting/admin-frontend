@@ -98,4 +98,149 @@ describe('CandidateScreen', () => {
     cy.get('#nominationDistrict option').should('have.length', 3);
   });
 
+  it('should add a candidate and refresh list', () => {
+    cy.mockGetCandidatesSuccess([]);
+    cy.fixture('parties').then((content) => {
+      cy.mockGetPartiesSuccess(content);
+    });
+    cy.fixture('nominationDistricts').then((content) => {
+      cy.mockGetNominationDistrictsSuccess(content);
+    });
+    cy.visit('/candidate');
+    cy.wait('@mockGetCandidatesSuccess');
+    cy.wait('@mockGetPartiesSuccess');
+    cy.wait('@mockGetNominationDistrictsSuccess');
+
+    cy.mockAddCandidate();
+    cy.fixture('candidatesNewEntry').then((content) => {
+      cy.mockGetCandidatesAfterAdd(content);
+    });
+
+    cy.get('form').within(() => {
+      cy.get('input#name').should('exist').type('Test Man');
+      cy.get('select#party')
+        .should('exist')
+        .select('Nordlisten');
+      cy.get('select#nominationDistrict')
+        .should('exist')
+        .select('Banan-distriktet');
+    });
+
+    cy.get('form button[type="submit"]').should('exist').click();
+
+    cy.wait('@mockAddCandidate');
+    cy.contains('Candidate added successfully!').should('be.visible');
+
+    cy.wait('@mockGetCandidatesAfterAdd');
+    cy.get('.card-body table tbody tr').should('have.length', 1);
+    cy.get('.card-body table tbody tr')
+      .first()
+      .within(() => {
+        cy.get('td').eq(0).should('contain', 'Test Man');
+        cy.get('td').eq(1).should('contain', 'Nordlisten');
+        cy.get('td').eq(2).should('contain', 'Banan-distriktet');
+      });
+  });
+
+  it('should give toast error when candidate name is too short', () => {
+    cy.mockGetCandidatesSuccess([]);
+    cy.fixture('parties').then((content) => {
+      cy.mockGetPartiesSuccess(content);
+    });
+    cy.fixture('nominationDistricts').then((content) => {
+      cy.mockGetNominationDistrictsSuccess(content);
+    });
+    cy.visit('/candidate');
+    cy.wait('@mockGetCandidatesSuccess');
+    cy.wait('@mockGetPartiesSuccess');
+    cy.wait('@mockGetNominationDistrictsSuccess');
+
+    cy.get('form').within(() => {
+      cy.get('input#name').should('exist').type('T');
+      cy.get('select#party')
+        .should('exist')
+        .select('Nordlisten');
+      cy.get('select#nominationDistrict')
+        .should('exist')
+        .select('Banan-distriktet');
+    });
+    cy.get('form button[type="submit"]').should('exist').click();
+    cy.contains('Candidate name must be between 3 and 100 characters.')
+      .should('be.visible');
+  });
+
+  it('should give toast error when candidate name is too long', () => {
+    cy.mockGetCandidatesSuccess([]);
+    cy.fixture('parties').then((content) => {
+      cy.mockGetPartiesSuccess(content);
+    });
+    cy.fixture('nominationDistricts').then((content) => {
+      cy.mockGetNominationDistrictsSuccess(content);
+    });
+    cy.visit('/candidate');
+    cy.wait('@mockGetCandidatesSuccess');
+    cy.wait('@mockGetPartiesSuccess');
+    cy.wait('@mockGetNominationDistrictsSuccess');
+
+    cy.get('form').within(() => {
+      cy.get('input#name').should('exist').type('P'.repeat(101));
+      cy.get('select#party')
+        .should('exist')
+        .select('Nordlisten');
+      cy.get('select#nominationDistrict')
+        .should('exist')
+        .select('Banan-distriktet');
+    });
+    cy.get('form button[type="submit"]').should('exist').click();
+    cy.contains('Candidate name must be between 3 and 100 characters.')
+      .should('be.visible');
+  });
+
+  it('should give toast error when party is not selected', () => {
+    cy.mockGetCandidatesSuccess([]);
+    cy.fixture('parties').then((content) => {
+      cy.mockGetPartiesSuccess(content);
+    });
+    cy.fixture('nominationDistricts').then((content) => {
+      cy.mockGetNominationDistrictsSuccess(content);
+    });
+    cy.visit('/candidate');
+    cy.wait('@mockGetCandidatesSuccess');
+    cy.wait('@mockGetPartiesSuccess');
+    cy.wait('@mockGetNominationDistrictsSuccess');
+
+    cy.get('form').within(() => {
+      cy.get('input#name').should('exist').type('Test Man');
+      cy.get('select#nominationDistrict')
+        .should('exist')
+        .select('Banan-distriktet');
+  });
+    cy.get('form button[type="submit"]').should('exist').click();
+    cy.contains('Party is required.')
+      .should('be.visible');
+  });
+
+  it('should give toast error when nomination district is not selected', () => {
+    cy.mockGetCandidatesSuccess([]);
+    cy.fixture('parties').then((content) => {
+      cy.mockGetPartiesSuccess(content);
+    });
+    cy.fixture('nominationDistricts').then((content) => {
+      cy.mockGetNominationDistrictsSuccess(content);
+    });
+    cy.visit('/candidate');
+    cy.wait('@mockGetCandidatesSuccess');
+    cy.wait('@mockGetPartiesSuccess');
+    cy.wait('@mockGetNominationDistrictsSuccess');
+
+    cy.get('form').within(() => {
+      cy.get('input#name').should('exist').type('Test Man');
+      cy.get('select#party')
+        .should('exist')
+        .select('Nordlisten');
+    });
+    cy.get('form button[type="submit"]').should('exist').click();
+    cy.contains('Nomination District is required.')
+      .should('be.visible');
+  });
 });

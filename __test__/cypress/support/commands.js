@@ -122,6 +122,22 @@ Cypress.Commands.add('mockGetCandidatesFail', (content) => {
   }).as('mockGetCandidatesFail');
 });
 
+Cypress.Commands.add('mockAddCandidate', () => {
+  cy.intercept('POST', BACKEND_URL + '/candidate*', {
+    statusCode: 201,
+    body: { message: 'Candidate added successfully!' },
+  }).as('mockAddCandidate');
+});
+
+Cypress.Commands.add('mockGetCandidatesAfterAdd', () => {
+  cy.fixture('candidatesNewEntry').then((content) => {
+    cy.intercept('GET', BACKEND_URL + '/candidate*', {
+      statusCode: 200,
+      body: content,
+    }).as('mockGetCandidatesAfterAdd');
+  });
+});
+
 // CONSTIUENCY PAGE
 Cypress.Commands.add('mockGetConstituencySuccess', (content) => {
   cy.intercept('GET', BACKEND_URL + '/constituency*', {
