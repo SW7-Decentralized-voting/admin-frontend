@@ -58,7 +58,7 @@ describe('PollingStationScreen', () => {
     cy.wait('@mockGetPollingStationsFail');
     cy.wait('@mockGetNominationDistrictsSuccess');
     cy.contains('Failed to fetch polling stations.')
-    .should('be.visible')
+    .should('be.visible');
   });
 
   it('should show nomination districts in dropdown', () => {
