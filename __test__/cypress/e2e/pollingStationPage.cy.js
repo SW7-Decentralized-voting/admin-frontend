@@ -34,6 +34,7 @@ describe('PollingStationScreen', () => {
     });
   });
 
+
   it('Should display text if no polling stations are registered', () => {
     cy.mockGetPollingStationsSuccess([]);
     cy.mockGetNominationDistrictsSuccess([]);
@@ -45,11 +46,13 @@ describe('PollingStationScreen', () => {
       .and('contain.text', 'No Polling Station found.');
   });
 
+
   it('Should navigate to login, if no token', () => {
     cy.clearToken();
     cy.visit('/polling-station');
     cy.url().should('include', '/login');
   });
+
 
   it('Should give a toast error, when unsuccessful fetch', () => {
     cy.mockGetPollingStationsFail();
@@ -61,7 +64,8 @@ describe('PollingStationScreen', () => {
       .should('be.visible');
   });
 
-  it('should show nomination districts in dropdown', () => {
+
+  it('should be able to add polling station and refresh list', () => {
     cy.mockGetPollingStationsSuccess([]);
     cy.fixture('nominationDistricts').then((content) => {
       cy.mockGetNominationDistrictsSuccess(content);
@@ -96,5 +100,22 @@ describe('PollingStationScreen', () => {
         cy.get('td').eq(1).should('contain', 'Banan-distriktet');
         cy.get('td').eq(2).should('contain', '1000');
       });
+  });
+
+
+  it('should display correct nomination districts in dropdown', () => {
+    cy.fixture('pollingStations').then((content) => {
+      cy.mockGetPollingStationsSuccess(content);
+    });
+    cy.fixture('nominationDistricts').then((content) => {
+      cy.mockGetNominationDistrictsSuccess(content);
+    });
+
+    cy.visit('/polling-station');
+    cy.wait('@mockGetPollingStationsSuccess');
+    cy.wait('@mockGetNominationDistrictsSuccess');
+    cy.get('#nominationDistrict option').should('have.length', 3);
+    cy.get('#nominationDistrict option').eq(1).should('have.text', 'Banan-distriktet');
+    cy.get('#nominationDistrict option').eq(2).should('have.text', 'Kakao-distriktet');
   });
 });
