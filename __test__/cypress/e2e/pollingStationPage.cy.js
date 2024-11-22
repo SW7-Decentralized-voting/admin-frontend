@@ -70,11 +70,10 @@ describe('PollingStationScreen', () => {
     });
 
     cy.visit('/polling-station');
-    cy.get('#nominationDistrict').select();
     cy.wait('@mockGetPollingStationsSuccess');
     cy.wait('@mockGetNominationDistrictsSuccess');
-    cy.get('#nominationDistrict option').should('have.length', 2);
-    cy.get('#nominationDistrict option').first().should('have.text', 'Banan-distriktet');
-    cy.get('#nominationDistrict option').last().should('have.text', 'Kakao-distriktet');
+    cy.get('#nominationDistrict option').should('have.length', 3);
+    cy.get('#nominationDistrict option').eq(1).should('have.text', 'Banan-distriktet');
+    cy.get('#nominationDistrict option').eq(2).should('have.text', 'Kakao-distriktet');
   });
 });
