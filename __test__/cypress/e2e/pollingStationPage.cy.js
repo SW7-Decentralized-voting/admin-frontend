@@ -118,4 +118,143 @@ describe('PollingStationScreen', () => {
     cy.get('#nominationDistrict option').eq(1).should('have.text', 'Banan-distriktet');
     cy.get('#nominationDistrict option').eq(2).should('have.text', 'Kakao-distriktet');
   });
+
+
+  it('should give toast error with too short polling station name', () => {
+    cy.mockGetPollingStationsSuccess([]);
+    cy.fixture('nominationDistricts').then((content) => {
+      cy.mockGetNominationDistrictsSuccess(content);
+    });
+
+    cy.visit('/polling-station');
+    cy.wait('@mockGetPollingStationsSuccess');
+    cy.wait('@mockGetNominationDistrictsSuccess');
+
+    cy.get('form').within(() => {
+      cy.get('input#name').should('exist').type('A');
+      cy.get('select#nominationDistrict')
+        .should('exist')
+        .select('Banan-distriktet');
+      cy.get('input#expectedVoters').should('exist').type('1000');
+    });
+    cy.get('form button[type="submit"]').should('exist').click();
+
+    cy.contains('Polling station name must be between 3 and 100 characters.')
+      .should('be.visible');
+  });
+
+
+  it('should give toast error with too long polling station name', () => {
+    cy.mockGetPollingStationsSuccess([]);
+    cy.fixture('nominationDistricts').then((content) => {
+      cy.mockGetNominationDistrictsSuccess(content);
+    });
+
+    cy.visit('/polling-station');
+    cy.wait('@mockGetPollingStationsSuccess');
+    cy.wait('@mockGetNominationDistrictsSuccess');
+
+    cy.get('form').within(() => {
+      cy.get('input#name').should('exist').type('A'.repeat(101));
+      cy.get('select#nominationDistrict')
+        .should('exist')
+        .select('Banan-distriktet');
+      cy.get('input#expectedVoters').should('exist').type('1000');
+    });
+    cy.get('form button[type="submit"]').should('exist').click();
+
+    cy.contains('Polling station name must be between 3 and 100 characters.')
+      .should('be.visible');
+  });
+
+
+  it('should give toast error with negative expected voters', () => {
+    cy.mockGetPollingStationsSuccess([]);
+    cy.fixture('nominationDistricts').then((content) => {
+      cy.mockGetNominationDistrictsSuccess(content);
+    });
+
+    cy.visit('/polling-station');
+    cy.wait('@mockGetPollingStationsSuccess');
+    cy.wait('@mockGetNominationDistrictsSuccess');
+
+    cy.get('form').within(() => {
+      cy.get('input#name').should('exist').type('Abe-station');
+      cy.get('select#nominationDistrict')
+        .should('exist')
+        .select('Banan-distriktet');
+      cy.get('input#expectedVoters').should('exist').type('-1000');
+    });
+    cy.get('form button[type="submit"]').should('exist').click();
+
+    cy.contains('Expected voters must be a positive number.')
+      .should('be.visible');
+  });
+
+
+  it('should give toast error with no expected voters', () => {
+    cy.mockGetPollingStationsSuccess([]);
+    cy.fixture('nominationDistricts').then((content) => {
+      cy.mockGetNominationDistrictsSuccess(content);
+    });
+
+    cy.visit('/polling-station');
+    cy.wait('@mockGetPollingStationsSuccess');
+    cy.wait('@mockGetNominationDistrictsSuccess');
+
+    cy.get('form').within(() => {
+      cy.get('input#name').should('exist').type('Abe-station');
+      cy.get('select#nominationDistrict')
+        .should('exist')
+        .select('Banan-distriktet');
+    });
+    cy.get('form button[type="submit"]').should('exist').click();
+
+    cy.contains('Expected Voters is required.')
+      .should('be.visible');
+  });
+
+
+  it('should give toast error with no nomination district selected', () => {
+    cy.mockGetPollingStationsSuccess([]);
+    cy.fixture('nominationDistricts').then((content) => {
+      cy.mockGetNominationDistrictsSuccess(content);
+    });
+
+    cy.visit('/polling-station');
+    cy.wait('@mockGetPollingStationsSuccess');
+    cy.wait('@mockGetNominationDistrictsSuccess');
+
+    cy.get('form').within(() => {
+      cy.get('input#name').should('exist').type('Abe-station');
+      cy.get('input#expectedVoters').should('exist').type('1000');
+    });
+    cy.get('form button[type="submit"]').should('exist').click();
+
+    cy.contains('Nomination District is required.')
+      .should('be.visible');
+  });
+
+
+  it('should give toast error with no name', () => {
+    cy.mockGetPollingStationsSuccess([]);
+    cy.fixture('nominationDistricts').then((content) => {
+      cy.mockGetNominationDistrictsSuccess(content);
+    });
+
+    cy.visit('/polling-station');
+    cy.wait('@mockGetPollingStationsSuccess');
+    cy.wait('@mockGetNominationDistrictsSuccess');
+
+    cy.get('form').within(() => {
+      cy.get('select#nominationDistrict')
+        .should('exist')
+        .select('Banan-distriktet');
+      cy.get('input#expectedVoters').should('exist').type('1000');
+    });
+    cy.get('form button[type="submit"]').should('exist').click();
+
+    cy.contains('Name is required.')
+      .should('be.visible');
+  });
 });
