@@ -35,8 +35,8 @@ describe('PollingStationScreen', () => {
   });
 
   it('Should display text if no polling stations are registered', () => {
-    cy.mockGetPollingStationsSuccess([{}]);
-    cy.mockGetNominationDistrictsSuccess([{}]);
+    cy.mockGetPollingStationsSuccess([]);
+    cy.mockGetNominationDistrictsSuccess([]);
     cy.visit('/polling-station');
     cy.wait('@mockGetPollingStationsSuccess');
     cy.wait('@mockGetNominationDistrictsSuccess');
@@ -70,7 +70,7 @@ describe('PollingStationScreen', () => {
     });
 
     cy.visit('/polling-station');
-    cy.get('#nominationDistrict').click();
+    cy.get('#nominationDistrict').select();
     cy.wait('@mockGetPollingStationsSuccess');
     cy.wait('@mockGetNominationDistrictsSuccess');
     cy.get('#nominationDistrict option').should('have.length', 2);

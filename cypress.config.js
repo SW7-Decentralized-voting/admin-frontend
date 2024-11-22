@@ -10,7 +10,7 @@ export default defineConfig({
   chromeWebSecurity: false,
   downloadsFolder: '__test__/cypress/downloads',
   e2e: {
-    baseUrl: 'http://localhost:5173',
+    baseUrl: 'http://localhost:2525',
     specPattern: '__test__/cypress/**/*.cy.js',
     supportFile: '__test__/cypress/support/e2e.js',
   },
