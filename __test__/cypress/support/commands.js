@@ -83,6 +83,13 @@ Cypress.Commands.add('mockDeletePollingStation', (id) => {
   }).as('mockDeletePollingStation');
 });
 
+Cypress.Commands.add('mockEditPollingStation', (id) => {
+  cy.intercept('PATCH', BACKEND_URL + '/pollingStations/' + id, {
+    statusCode: 200,
+    body: { message: 'Polling Station updated successfully!' },
+  }).as('mockEditPollingStation');
+});
+
 
 // NOMINATION DISTRICT PAGE
 Cypress.Commands.add('mockGetNominationDistrictsSuccess', (content) => {
