@@ -4,7 +4,6 @@ import { jwtDecode } from 'jwt-decode';
 import toast from 'react-hot-toast';
 
 function ProtectedRoute({ children }) {
-
   if (typeof sessionStorage.getItem('jwt') === 'string' && jwtDecode(sessionStorage.getItem('jwt')).exp > new Date().getTime() / 1000) {
     return children;
   }

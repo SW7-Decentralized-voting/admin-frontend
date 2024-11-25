@@ -21,12 +21,13 @@ function CandidateScreen() {
       // eslint-disable-next-line no-console
       console.error(error);
       toast.error('Failed to fetch candidates.');
+      return [];
     }
   };
 
   useEffect(() => {
     fetchCandidates().then((candidates) => {
-      if (candidates?.length > 0) {
+      if (candidates || []) {
         setCandidates(candidates);
       }
     });
