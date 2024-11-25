@@ -28,7 +28,8 @@ function KeyScreen() {
 		setBtnText('Generating...')
 		setStatusText('Starting key generation...')
 		// Call the API to generate keys
-		const res = await startKeyGeneration();
+		const res = await startKeyGeneration().catch(() => { setStatusText('Failed to start key generation.'); });
+		if (!res) return;
 		setStatusText('Key generation started.');
 		setStatusLink(res.statusLink);
 	}
@@ -38,9 +39,10 @@ function KeyScreen() {
 		if (isGenerating && statusLink) {
 			setStatusText(`Key generation staus: ${progress.toFixed(0)}%`)
 			interval = setInterval(async () => {
-				const data = await getKeyGenerationStatus(statusLink.split('/').pop());
+				const data = await getKeyGenerationStatus(statusLink.split('/').pop()).catch(() => null);
 				if (data) {
 					setProgress((data.completed / data.total) * 100);
+					console.log(data)
 					if (progress >= 100) {
 						setBtnText('Generate Keys');
 						setIsGenerating(false);
@@ -48,6 +50,8 @@ function KeyScreen() {
 						const { totalKeys } = await getNumOfKeys();
 						setStatusText(`Successfully generated ${totalKeys} keys.`);
 					}
+				} else {
+					setStatusText('Failed to get key generation status.');
 				}
 			}, 400);
 		}
@@ -62,6 +66,7 @@ function KeyScreen() {
 				<div className='w-1/2 bg-primary rounded-lg shadow-md p-4 flex flex-col items-center justify-start'>
 					<h2 className='text-xl text-primary-content font-bold mb-4'>Start Key Generation</h2>
 					<button
+						id='generate-keys'
 						className='bg-slate-200 text-primary-content px-4 py-2 rounded-md hover:bg-slate-300'
 						onClick={() => generateKeys()}
 						disabled={isGenerating}
@@ -69,7 +74,7 @@ function KeyScreen() {
 						{btnText || 'Generate Keys'}
 					</button>
 					<div className='mt-4 w-full'>{renderProgressBar()}</div>
-					<p className='text-sm text-secondary-content mt-4'> 
+					<p className='text-sm text-secondary-content mt-4' id='status-text'> 
 						{statusText}
 					</p>
 				</div>
