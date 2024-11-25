@@ -34,27 +34,12 @@ function ListItems({
 		setIsDeleteModalOpen(false);
 	};
 
-const getDisplayValue = (item, field) => {
-  try {
-    const value = item[field.name]; // Get the field's value from the item
-
-    if (Array.isArray(value)) {
-      // If the value is an array, map over it
-      return value.map((option) => (typeof option === 'object' ? option.name : option)).join(', ');
-    }
-
-    if (typeof value === 'object' && value !== null) {
-      // If the value is an object, return its 'name' property
-      return value.name || '';
-    }
-
-    // For primitive values or empty cases
-    return value || '';
-  } catch (error) {
-    console.error(`Error processing field "${field.name}":`, error);
-    return ''; // Return an empty string on error
-  }
-};
+	const getDisplayValue = (item, field) => {
+		if (typeof item[field.name] === 'object') {
+			return item[field.name]?.name;
+		}
+		return item[field.name];
+	};
 
 	return (
 		<div className="card bg-primary text-primary-content h-full w-2/3">
@@ -71,37 +56,34 @@ const getDisplayValue = (item, field) => {
 							</tr>
 						</thead>
 						<tbody>
-							{(!items || items.length === 0) && (
+							{!items || items.length === 0 && (
 								<tr>
 									<td colSpan={fields.length + 2}>No {itemType} found.</td>
 								</tr>
 							)}
-							{Array.isArray(items) &&
-								items.map((item) => (
-									<tr key={item._id}>
-										{fields.map((field) => (
-											<td className="" key={field.name}>
-												{getDisplayValue(item, field)}
-											</td>
-										))}
-										<td className="w-min whitespace-nowrap px-0 text-right w-0">
-											<button
-												className="btn"
-												onClick={() => openEditModal(item)}
-											>
-												<FaEdit />
-											</button>
-										</td>
-										<td className="whitespace-nowrap w-min text-right w-0">
-											<button
-												className="btn btn-error"
-												onClick={() => openDeleteModal(item)}
-											>
-												<FaTrash />
-											</button>
-										</td>
-									</tr>
-								))}
+							{items.map((item) => (
+								<tr key={item._id}>
+									{fields.map((field) => (
+										<td className='' key={field.name}>{getDisplayValue(item, field)}</td>
+									))}
+									<td className='w-min whitespace-nowrap px-0 text-right w-0'>
+										<button
+											className="btn"
+											onClick={() => openEditModal(item)}
+										>
+											<FaEdit />
+										</button>
+									</td>
+									<td className='whitespace-nowrap w-min text-right w-0'>
+										<button
+											className="btn btn-error"
+											onClick={() => openDeleteModal(item)}
+										>
+											<FaTrash />
+										</button>
+									</td>
+								</tr>
+							))}
 						</tbody>
 					</table>
 				</div>
@@ -139,4 +121,3 @@ ListItems.propTypes = {
 };
 
 export default ListItems;
-
