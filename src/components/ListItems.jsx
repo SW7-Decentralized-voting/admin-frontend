@@ -35,10 +35,11 @@ function ListItems({
 	};
 
 	const getDisplayValue = (item, field) => {
-		if (typeof item[field.name] === 'object') {
-			return item[field.name]?.name;
+		const value = item[field.name];
+		if (Array.isArray(value)) {
+			return value.map((option) => option.name || option).join(', ');
 		}
-		return item[field.name];
+		return value?.name || value || '';
 	};
 
 	return (
@@ -56,34 +57,39 @@ function ListItems({
 							</tr>
 						</thead>
 						<tbody>
-							{!items || items.length === 0 && (
+							{Array.isArray(items) && items.length > 0 ? (
+								items.map((item) => (
+									<tr key={item._id}>
+										{fields.map((field) => (
+											<td className='' key={field.name}>
+												{getDisplayValue(item, field)}
+											</td>
+										))}
+										<td className='w-min whitespace-nowrap px-0 text-right w-0'>
+											<button
+												className="btn"
+												onClick={() => openEditModal(item)}
+											>
+												<FaEdit />
+											</button>
+										</td>
+										<td className='whitespace-nowrap w-min text-right w-0'>
+											<button
+												className="btn btn-error"
+												onClick={() => openDeleteModal(item)}
+											>
+												<FaTrash />
+											</button>
+										</td>
+									</tr>
+								))
+							) : (
 								<tr>
-									<td colSpan={fields.length + 2}>No {itemType} found.</td>
+									<td colSpan={fields.length + 2}>
+										No {itemType} found.
+									</td>
 								</tr>
 							)}
-							{items.map((item) => (
-								<tr key={item._id}>
-									{fields.map((field) => (
-										<td className='' key={field.name}>{getDisplayValue(item, field)}</td>
-									))}
-									<td className='w-min whitespace-nowrap px-0 text-right w-0'>
-										<button
-											className="btn"
-											onClick={() => openEditModal(item)}
-										>
-											<FaEdit />
-										</button>
-									</td>
-									<td className='whitespace-nowrap w-min text-right w-0'>
-										<button
-											className="btn btn-error"
-											onClick={() => openDeleteModal(item)}
-										>
-											<FaTrash />
-										</button>
-									</td>
-								</tr>
-							))}
 						</tbody>
 					</table>
 				</div>
