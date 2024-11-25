@@ -34,13 +34,18 @@ function ListItems({
 		setIsDeleteModalOpen(false);
 	};
 
-	const getDisplayValue = (item, field) => {
-		const value = item[field.name];
-		if (Array.isArray(value)) {
-			return value.map((option) => option.name || option).join(', ');
-		}
-		return value?.name || value || '';
-	};
+
+const getDisplayValue = (item, field) => {
+    const value = item[field.name]; // Get field value from the item
+    if (Array.isArray(value)) {
+        return value.map((option) => option?.name || option || '').join(', '); // Safely handle array values
+    }
+    if (typeof value === 'object' && value !== null) {
+        return value?.name || JSON.stringify(value); // Handle objects
+    }
+    return value || ''; // Fallback for primitives, null, or undefined
+};
+
 
 	return (
 		<div className="card bg-primary text-primary-content h-full w-2/3">
