@@ -14,7 +14,7 @@
     "cy:run": "cypress run",
     "cy:open": "cypress open --e2e --browser chrome --port 52750",
     "cy:server": "vite --port 2525",
-    "cy:actions": "npm-run-all --parallel cy:open cy:run"
+    "cy:actions": "npm-run-all --parallel cy:server cy:run"
   },
   "dependencies": {
     "axios": "^1.7.7",
