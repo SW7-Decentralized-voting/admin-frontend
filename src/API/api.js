@@ -6,14 +6,27 @@ import axios from 'axios';
 const api = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
     headers: {
-        'Authorization': import.meta.env.VITE_API_TOKEN,
+        'Authorization': sessionStorage.getItem('jwt'),
     },
 });
+
+api.interceptors.request.use(
+    config => {
+        const token = sessionStorage.getItem('jwt');
+        if (token) {
+            config.headers['Authorization'] = token;
+        }
+        return config;
+    },
+    error => {
+        return Promise.reject(error);
+    }
+);
 
 api.interceptors.response.use(
     response => response,
     error => {
-        // Use this for global error handling
+        // Handle errors here
         return Promise.reject(error);
     }
 );

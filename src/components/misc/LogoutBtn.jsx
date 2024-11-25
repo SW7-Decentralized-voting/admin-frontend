@@ -6,6 +6,7 @@ function LogoutBtn() {
 
   const handleLogout = () => {
     // TODO: implement some logout logic
+    sessionStorage.removeItem('jwt');
     navigate('/login');
   };
 
