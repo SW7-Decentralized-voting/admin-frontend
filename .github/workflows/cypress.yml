@@ -28,5 +28,4 @@ jobs:
           record: false 
           parallel: false
         env:
-          BACKEND_URL: "http://localhost:8888/api/v1"
-          ENVIRONMENT: "github"
+          VITE_API_URL: "http://localhost:8888/api/v1"
