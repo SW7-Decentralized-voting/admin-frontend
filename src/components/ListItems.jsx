@@ -34,18 +34,17 @@ function ListItems({
 		setIsDeleteModalOpen(false);
 	};
 
-
-const getDisplayValue = (item, field) => {
-    const value = item[field.name]; // Get field value from the item
-    if (Array.isArray(value)) {
-        return value.map((option) => option?.name || option || '').join(', '); // Safely handle array values
-    }
-    if (typeof value === 'object' && value !== null) {
-        return value?.name || JSON.stringify(value); // Handle objects
-    }
-    return value || ''; // Fallback for primitives, null, or undefined
-};
-
+	const getDisplayValue = (item, field) => {
+		if (Array.isArray(selectOptions?.[field.name])) {
+			return selectOptions[field.name]
+				.map(option => option.name)
+				.join(', ') || 'N/A';
+		}
+		if (typeof item[field.name] === 'object') {
+			return item[field.name]?.name || 'N/A';
+		}
+		return item[field.name] || 'N/A';
+	};
 
 	return (
 		<div className="card bg-primary text-primary-content h-full w-2/3">
@@ -62,15 +61,20 @@ const getDisplayValue = (item, field) => {
 							</tr>
 						</thead>
 						<tbody>
-							{Array.isArray(items) && items.length > 0 ? (
+							{(!items || items.length === 0) && (
+								<tr>
+									<td colSpan={fields.length + 2}>No {itemType} found.</td>
+								</tr>
+							)}
+							{Array.isArray(items) &&
 								items.map((item) => (
 									<tr key={item._id}>
 										{fields.map((field) => (
-											<td className='' key={field.name}>
+											<td className="" key={field.name}>
 												{getDisplayValue(item, field)}
 											</td>
 										))}
-										<td className='w-min whitespace-nowrap px-0 text-right w-0'>
+										<td className="w-min whitespace-nowrap px-0 text-right w-0">
 											<button
 												className="btn"
 												onClick={() => openEditModal(item)}
@@ -78,7 +82,7 @@ const getDisplayValue = (item, field) => {
 												<FaEdit />
 											</button>
 										</td>
-										<td className='whitespace-nowrap w-min text-right w-0'>
+										<td className="whitespace-nowrap w-min text-right w-0">
 											<button
 												className="btn btn-error"
 												onClick={() => openDeleteModal(item)}
@@ -87,14 +91,7 @@ const getDisplayValue = (item, field) => {
 											</button>
 										</td>
 									</tr>
-								))
-							) : (
-								<tr>
-									<td colSpan={fields.length + 2}>
-										No {itemType} found.
-									</td>
-								</tr>
-							)}
+								))}
 						</tbody>
 					</table>
 				</div>
@@ -132,3 +129,4 @@ ListItems.propTypes = {
 };
 
 export default ListItems;
+
