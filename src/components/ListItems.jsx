@@ -35,15 +35,14 @@ function ListItems({
 	};
 
 	const getDisplayValue = (item, field) => {
-		if (Array.isArray(selectOptions?.[field.name])) {
-			return selectOptions[field.name]
-				.map(option => option.name)
-				.join(', ') || 'N/A';
-		}
-		if (typeof item[field.name] === 'object') {
-			return item[field.name]?.name || 'N/A';
-		}
-		return item[field.name] || 'N/A';
+		try {
+      const value = item[field.name];
+		  if (Array.isArray(value)) {
+			  return value.map((option) => option.name || option).join(', ');
+		  }
+    } catch {
+		  return value?.name || value || '';
+    };
 	};
 
 	return (
