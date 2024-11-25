@@ -12,6 +12,7 @@ function ListItems({
 	fields,
 	updateItem,
 }) {
+  items = Array.isArray(items) ? items : [];
 	const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 	const [selectedItem, setSelectedItem] = useState(null);
@@ -56,7 +57,7 @@ function ListItems({
 							</tr>
 						</thead>
 						<tbody>
-							{!items || items.length === 0 && (
+							{items.length === 0 && (
 								<tr>
 									<td colSpan={fields.length + 2}>No {itemType} found.</td>
 								</tr>
