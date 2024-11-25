@@ -34,16 +34,27 @@ function ListItems({
 		setIsDeleteModalOpen(false);
 	};
 
-	const getDisplayValue = (item, field) => {
-		try {
-      const value = item[field.name];
-		  if (Array.isArray(value)) {
-			  return value.map((option) => option.name || option).join(', ');
-		  }
-    } catch {
-		  return value?.name || value || '';
-    };
-	};
+const getDisplayValue = (item, field) => {
+  try {
+    const value = item[field.name]; // Get the field's value from the item
+
+    if (Array.isArray(value)) {
+      // If the value is an array, map over it
+      return value.map((option) => (typeof option === 'object' ? option.name : option)).join(', ');
+    }
+
+    if (typeof value === 'object' && value !== null) {
+      // If the value is an object, return its 'name' property
+      return value.name || '';
+    }
+
+    // For primitive values or empty cases
+    return value || '';
+  } catch (error) {
+    console.error(`Error processing field "${field.name}":`, error);
+    return ''; // Return an empty string on error
+  }
+};
 
 	return (
 		<div className="card bg-primary text-primary-content h-full w-2/3">
