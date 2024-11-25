@@ -23,7 +23,7 @@ jobs:
         uses: cypress-io/github-action@v6
         
         with:
-          start: npm run cy:server cy:run
+          start: npm run cy:actions
           wait-on: 'http://localhost:2525' # Waits for above
           record: false 
           parallel: false
