@@ -2,12 +2,12 @@ import api from './api';
 
 /**
  * Fetch number of keys
- * @returns {Promise<>} List of keys
+ * @returns {Promise<{totalKeys: number}>} List of keys
  */
 export const getNumOfKeys = async () => {
 		const response = await api.get('/keys');
 		return response.data;
-}
+};
 
 /**
  * Start key generation
@@ -16,13 +16,14 @@ export const getNumOfKeys = async () => {
 export const startKeyGeneration = async () => {
 		const response = await api.post('/keys/generate');
 		return response.data;
-}
+};
 
 /**
  * Get key generation status
+ * @param {string} id Id of the key generation
  * @returns {Promise<object>} Key generation status
  */
 export const getKeyGenerationStatus = async (id) => {
 		const response = await api.get('/keys/status/' + id);
 		return response.data;
-}
+};

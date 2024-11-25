@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react'
-import Header from '../../components/misc/Header'
-import { getKeyGenerationStatus, getNumOfKeys, startKeyGeneration } from '../../API'
+import React, { useEffect } from 'react';
+import Header from '../../components/misc/Header';
+import { getKeyGenerationStatus, getNumOfKeys, startKeyGeneration } from '../../API';
 
 function KeyScreen() {
-	const [isGenerating, setIsGenerating] = React.useState(false)
-	const [statusLink, setStatusLink] = React.useState(null)
-	const [progress, setProgress] = React.useState(0.0)
-	const [btnText, setBtnText] = React.useState(null)
-	const [statusText, setStatusText] = React.useState('')
+	const [isGenerating, setIsGenerating] = React.useState(false);
+	const [statusLink, setStatusLink] = React.useState(null);
+	const [progress, setProgress] = React.useState(0.0);
+	const [btnText, setBtnText] = React.useState(null);
+	const [statusText, setStatusText] = React.useState('');
 
 	const renderProgressBar = () => {
-		if (!isGenerating) return null
+		if (!isGenerating) return null;
 		return (
 			<div className='w-full h-4 bg-gray-300 rounded-md'>
 				<div
@@ -18,31 +18,30 @@ function KeyScreen() {
 					style={{ width: `${progress}%` }}
 				></div>
 			</div>
-		)
-	}
+		);
+	};
 
 	const generateKeys = async () => {
-		setIsGenerating(true)
-		setStatusLink(null)
-		setProgress(0)
-		setBtnText('Generating...')
-		setStatusText('Starting key generation...')
+		setIsGenerating(true);
+		setStatusLink(null);
+		setProgress(0);
+		setBtnText('Generating...');
+		setStatusText('Starting key generation...');
 		// Call the API to generate keys
 		const res = await startKeyGeneration().catch(() => { setStatusText('Failed to start key generation.'); });
 		if (!res) return;
 		setStatusText('Key generation started.');
 		setStatusLink(res.statusLink);
-	}
+	};
 
 	useEffect(() => {
 		let interval;
 		if (isGenerating && statusLink) {
-			setStatusText(`Key generation staus: ${progress.toFixed(0)}%`)
+			setStatusText(`Key generation staus: ${progress.toFixed(0)}%`);
 			interval = setInterval(async () => {
 				const data = await getKeyGenerationStatus(statusLink.split('/').pop()).catch(() => null);
 				if (data) {
 					setProgress((data.completed / data.total) * 100);
-					console.log(data)
 					if (progress >= 100) {
 						setBtnText('Generate Keys');
 						setIsGenerating(false);
@@ -80,7 +79,7 @@ function KeyScreen() {
 				</div>
 			</div>
 		</div>
-	)
+	);
 }
 
-export default KeyScreen
+export default KeyScreen;

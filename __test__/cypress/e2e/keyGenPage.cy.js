@@ -9,7 +9,10 @@ describe('Key Generation Screen', () => {
 		cy.mockStatusSuccess(20);
 		cy.get('button[id=generate-keys]').click();
 		cy.wait('@mockKeyGenerationSuccess');
-		cy.get('div.bg-secondary').should('exist').and('have.css', 'width', '76.9296875px'); // 20% of view width
+		cy.get('div.bg-secondary')
+			.should('exist')
+			.invoke('attr', 'style')
+			.should('include', 'width: 20%');
 	});
 
 	it('should show succes message when keys are generated successfully', () => {
