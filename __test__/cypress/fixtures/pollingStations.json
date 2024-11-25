@@ -1,0 +1,14 @@
+[
+  {
+		"_id": 1,
+		"name": "Abe-station",
+		"nominationDistrict": "Banan-distriktet",
+    "expectedVoters": 10
+	},
+  {
+    "_id": 2,
+    "name": "Fugle-station",
+    "nominationDistrict": "Kakao-distriktet",
+    "expectedVoters": 20
+  }
+]
