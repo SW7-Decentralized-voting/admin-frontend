@@ -157,3 +157,33 @@ Cypress.Commands.add('mockGetConstituencyFail', (content) => {
     body: content,
   }).as('mockGetConstituencyFail');
 });
+
+// Key Generation Page
+Cypress.Commands.add('mockKeyGenerationSuccess', () => {
+  cy.intercept('POST', BACKEND_URL + '/keys/generate', {
+    statusCode: 200,
+    body: {
+      statusLink: '/keys/status/123',
+    },
+  }).as('mockKeyGenerationSuccess');
+});
+
+Cypress.Commands.add('mockKeyGenerationFailure', () => {
+  cy.intercept('POST', BACKEND_URL + '/keys/generate', {
+    statusCode: 500,
+  }).as('mockKeyGenerationFailure');
+});
+
+Cypress.Commands.add('mockStatusSuccess', (completed) => {
+  cy.intercept('GET', BACKEND_URL + '/keys/status/*', {
+    statusCode: 200,
+    body: { completed: completed, total: 100 },
+  }).as('mockStatusSuccess');
+});
+
+Cypress.Commands.add('mockGetNumOfKeys', () => {
+  cy.intercept('GET', BACKEND_URL + '/keys', {
+    statusCode: 200,
+    body: { totalKeys: 100 },
+  }).as('mockGetNumOfKeys');
+});

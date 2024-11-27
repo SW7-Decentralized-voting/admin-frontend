@@ -9,6 +9,7 @@ import PartyScreen from './screens/Party/PartyScreen';
 import NominationDistrictScreen from './screens/NominationDistrict/NominationDistrictScreen';
 import ConstituencyScreen from './screens/Constituency/ConstituencyScreen';
 import PollingStationScreen from './screens/PollingStation/PollingStationScreen';
+import KeyScreen from './screens/Keys/KeyScreen';
 
 /**
  * App component that renders the application
@@ -27,6 +28,7 @@ function App() {
       <Route path="/nomination-district" element={<ProtectedRoute> <NominationDistrictScreen /> </ProtectedRoute>} />
       <Route path="/constituency" element={<ProtectedRoute> <ConstituencyScreen /> </ProtectedRoute>} />
       <Route path="/polling-station" element={<ProtectedRoute> <PollingStationScreen /> </ProtectedRoute>} />
+      <Route path="/key-generation" element={<ProtectedRoute> <KeyScreen /> </ProtectedRoute>} />
     </Routes>
 
   );
