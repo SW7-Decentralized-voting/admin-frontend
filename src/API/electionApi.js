@@ -27,4 +27,4 @@ export const advancePhase = async () => {
 export const getElectionPhase = async () => {
     const response = await api.get('/election/phase');
     return response.data;
-}
+};

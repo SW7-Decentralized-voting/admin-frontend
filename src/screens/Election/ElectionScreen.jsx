@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { advancePhase, getElectionPhase, startElection } from '../../API';
 import { toast } from 'react-hot-toast';
 import { electionPhaseDetails, ElectionPhases } from '../../components/election/electionPhaseDetails';
@@ -14,6 +14,7 @@ function ElectionScreen() {
       setElectionState(ElectionPhases[Object.keys(ElectionPhases)[parseInt(response.currentPhase) + 1]]);
     } catch (error) {
       if (!error.response) {
+        // eslint-disable-next-line no-console
         console.error(error);
         toast.error('An error occurred while fetching the election phase');
         return;
@@ -41,6 +42,7 @@ function ElectionScreen() {
       toast.success('Election has started successfully!');
       return;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
       if (!error.response) {
         toast.error('An error occurred while starting the election');
@@ -62,9 +64,10 @@ function ElectionScreen() {
         await sendAdvancePhaseRequest(ElectionPhases.TALLYING);
         break;
       case ElectionPhases.TALLYING:
-        const confirm = window.confirm('Are you sure you want to end the election? This action cannot be undone.');
-        if (!confirm) {
-          return;
+        // eslint-disable-next-line no-case-declarations
+        const confirmed = window.confirm('Are you sure you want to end the election? This action cannot be undone.');
+        if (confirmed) {
+          await sendAdvancePhaseRequest(ElectionPhases.COMPLETED);
         }
         await sendAdvancePhaseRequest(ElectionPhases.COMPLETED);
         break;
@@ -78,7 +81,9 @@ function ElectionScreen() {
     try {
       await advancePhase();
       setElectionState(phase);
+      toast.success('Phase advanced successfully!');
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
       if (!error.response) {
         toast.error('An error occurred while advancing the election phase');

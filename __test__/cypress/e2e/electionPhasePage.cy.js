@@ -38,7 +38,6 @@ describe('ElectionPhaseScreen', () => {
 		cy.mockGetElectionPhaseSuccess(-1);
 		cy.visit('/election');
 
-
 		cy.fixture('electionPhases').then((content) => {
 			cy.get('#advance-btn').click();
 			cy.wait('@startElection');
@@ -47,6 +46,7 @@ describe('ElectionPhaseScreen', () => {
 			content.forEach((_, index) => {
 				if (index === content.length - 1) return;
 				cy.get('#advance-btn').click();
+				cy.on('window:confirm', () => true);
 				cy.get('#phase-label').should('have.text', content[index+1]?.phaseText);
 			});
 			cy.get('#advance-btn').click();
