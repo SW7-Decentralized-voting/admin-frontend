@@ -157,3 +157,50 @@ Cypress.Commands.add('mockGetConstituencyFail', (content) => {
     body: content,
   }).as('mockGetConstituencyFail');
 });
+
+// ELECTION PHASE PAGE
+Cypress.Commands.add('mockGetElectionPhaseSuccess', (phase) => {
+  cy.intercept('GET', BACKEND_URL + '/election/phase*', {
+    statusCode: 200,
+    body: {
+      currentPhase: phase,
+    },
+  }).as('getPhase');
+});
+
+Cypress.Commands.add('mockGetElectionPhaseError', () => {
+  cy.intercept('GET', BACKEND_URL + '/election/phase*', {
+    statusCode: 401,
+    body: {
+      error: 'No phases registered',
+    },
+  }).as('getPhase');
+});
+
+Cypress.Commands.add('mockAdvancePhase', () => {
+  cy.intercept('POST', BACKEND_URL + '/election/advance*', {
+    statusCode: 200,
+    body: { message: 'Phase advanced successfully!' },
+  }).as('advancePhase');
+});
+
+Cypress.Commands.add('mockAdvancePhaseError', () => {
+  cy.intercept('POST', BACKEND_URL + '/election/advance*', {
+    statusCode: 401,
+    body: { error: 'An error occurred while advancing the election phase' },
+  }).as('advancePhase');
+});
+
+Cypress.Commands.add('mockStartElection', () => {
+  cy.intercept('POST', BACKEND_URL + '/election/start*', {
+    statusCode: 200,
+    body: { message: 'Election started successfully!' },
+  }).as('startElection');
+});
+
+Cypress.Commands.add('mockStartElectionError', () => {
+  cy.intercept('POST', BACKEND_URL + '/election/start*', {
+    statusCode: 401,
+    body: { error: 'An error occurred while starting the election' },
+  }).as('startElection');
+});

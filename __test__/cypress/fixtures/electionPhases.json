@@ -1,0 +1,27 @@
+[
+	{
+		"id": -1,
+		"phaseText": "Election not started.",
+		"advanceText": "Start Election"
+	},
+	{
+		"id": 0,
+		"phaseText": "Registration is ongoing.",
+		"advanceText": "Start Voting Phase"
+	},
+	{
+		"id": 1,
+		"phaseText": "Voting is in progress.",
+		"advanceText": "End Voting Phase and Start Tallying"
+	},
+	{
+		"id": 2,
+		"phaseText": "Tallying votes.",
+		"advanceText": "End Election"
+	},
+	{
+		"id": 3,
+		"phaseText": "Election completed.",
+		"advanceText": "Restart Election"
+	}
+]

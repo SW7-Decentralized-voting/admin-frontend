@@ -56,36 +56,38 @@ function ElectionScreen() {
   const advanceElectionPhase = async () => {
     switch (electionState) {
       case ElectionPhases.REGISTRATION:
-        advancePhase();
-        setElectionState(ElectionPhases.VOTING);
+        await sendAdvancePhaseRequest(ElectionPhases.VOTING);
         break;
       case ElectionPhases.VOTING:
-        advancePhase();
-        setElectionState(ElectionPhases.TALLYING);
+        await sendAdvancePhaseRequest(ElectionPhases.TALLYING);
         break;
       case ElectionPhases.TALLYING:
         const confirm = window.confirm('Are you sure you want to end the election? This action cannot be undone.');
         if (!confirm) {
           return;
         }
-        try {
-          await advancePhase();
-          setElectionState(ElectionPhases.COMPLETED);
-        } catch (error) {
-          console.error(error);
-          if (!error.response) {
-            toast.error('An error occurred while advancing the election phase');
-            return;
-          }
-          toast.error(error.response.data.error);
-          return;
-        }
+        await sendAdvancePhaseRequest(ElectionPhases.COMPLETED);
         break;
       default:
         setElectionState(ElectionPhases.NOT_STARTED);
         break;
     }
   };
+
+  async function sendAdvancePhaseRequest(phase) {
+    try {
+      await advancePhase();
+      setElectionState(phase);
+    } catch (error) {
+      console.error(error);
+      if (!error.response) {
+        toast.error('An error occurred while advancing the election phase');
+        return;
+      }
+      toast.error(error.response.data.error);
+      return;
+    }
+  }
 
   // Consolidated function to render the status bar
   const renderStatusBar = () => {
@@ -95,7 +97,7 @@ function ElectionScreen() {
       <div className="p-4 w-full rounded-2xl text-xl font-mono text-white m-5 shadow-md" style={{ backgroundColor: color }}>
         <div className="flex justify-center items-center">
           <span className="text-2xl mr-2">{icon}</span>
-          <span className="text-2xl">{text}</span>
+          <span className="text-2xl" id='phase-label'>{text}</span>
         </div>
       </div>
     );
@@ -123,12 +125,12 @@ function ElectionScreen() {
             <h2 className="card-title text-center">Election Phase</h2>
             {renderStatusBar()}
             {(electionState === ElectionPhases.NOT_STARTED || electionState === ElectionPhases.COMPLETED) ?
-              <button onClick={handleStartElection} className="btn btn-secondary">
+              <button onClick={handleStartElection} className="btn btn-secondary" id='advance-btn'>
                 {electionState === ElectionPhases.COMPLETED
                   ? 'Restart Election'
                   : 'Start Election'}
               </button> :
-              <button onClick={advanceElectionPhase} className="btn btn-secondary">
+              <button onClick={advanceElectionPhase} className="btn btn-secondary" id='advance-btn'>
                 {getAdvanceText()}
               </button>
             }
