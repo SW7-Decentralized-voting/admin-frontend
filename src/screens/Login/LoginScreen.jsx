@@ -8,19 +8,16 @@ function LoginScreen() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // This is the hardcoded password for demonstration purposes.
-  // In a real app, you would use a more secure method of authentication.
-
   const handleLogin = async (e) => {
     e.preventDefault();
-
-    const token = await login(e.target.password.value);
-    if (!token) {
+    try {
+      const token = await login(e.target.password.value);
+      sessionStorage.setItem('jwt', token);
+      navigate('/home');
+    } catch {
       setError('Invalid password');
       return;
     }
-    sessionStorage.setItem('jwt', token);
-    navigate('/home');
   };
 
   function getJwtExpiration(token) {

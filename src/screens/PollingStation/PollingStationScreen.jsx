@@ -21,12 +21,13 @@ function PollingStationScreen() {
       // eslint-disable-next-line no-console
       console.error(error);
       toast.error('Failed to fetch polling stations.');
+      return [];
     }
   };
 
   useEffect(() => {
     fetchPollingStations().then((pollingStations) => {
-      if (pollingStations?.length > 0) {
+      if (pollingStations || []) {
         setPollingStations(pollingStations);
       }
     });

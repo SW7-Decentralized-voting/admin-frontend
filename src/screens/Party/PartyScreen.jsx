@@ -23,12 +23,13 @@ function PartyScreen() {
       // eslint-disable-next-line no-console
       console.error(error);
       toast.error('Failed to fetch parties.');
+      return [];
     }
   };
 
   useEffect(() => {
     fetchParties().then((parties) => {
-      if (parties.length > 0) {
+      if (parties || []) {
         setParties(parties);
       }
     });
