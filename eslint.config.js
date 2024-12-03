@@ -35,6 +35,7 @@ export default [
         'warn',
         { allowConstantExport: true },
       ],
+      'react-hooks/exhaustive-deps': 'off',
       'semi': ['error', 'always'],
       'quotes': ['error', 'single'],
       'no-unused-vars': 'error',
