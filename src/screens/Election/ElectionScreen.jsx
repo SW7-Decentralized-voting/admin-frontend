@@ -125,7 +125,7 @@ function ElectionScreen() {
     try {
       const response = await tally();
       toast.success('Election Tallied Successfully');
-      alert(response.data.tally);
+      alert(response.tally);
       return;
     } catch (error) {
       // eslint-disable-next-line no-console
