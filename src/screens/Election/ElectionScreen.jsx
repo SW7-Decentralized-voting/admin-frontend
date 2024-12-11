@@ -125,7 +125,7 @@ function ElectionScreen() {
     try {
       const response = await tally();
       toast.success('Election Tallied Successfully');
-      alert(response.body.tally);
+      alert(response.data.tally);
       return;
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -160,7 +160,7 @@ function ElectionScreen() {
 
             {electionState === ElectionPhases.TALLYING ? 
               <button onClick={handleTally} className="btn btn-secondary" id='advance-btn'>
-                End Election
+                Tally Votes
               </button> : null}
 
           </div>
