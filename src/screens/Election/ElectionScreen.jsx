@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { advancePhase, getElectionPhase, startElection } from '../../API';
+import { advancePhase, getElectionPhase, startElection, tally } from '../../API';
 import { toast } from 'react-hot-toast';
 import { electionPhaseDetails, ElectionPhases } from '../../components/election/electionPhaseDetails';
 import Header from '../../components/misc/Header';
@@ -121,6 +121,24 @@ function ElectionScreen() {
     }
   }
 
+  const handleTally = async () => {
+    try {
+      const response = await tally();
+      toast.success('Election Tallied Successfully');
+      alert(response.body.tally);
+      return;
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+      if (!error.response) {
+        toast.error('An error occurred while tallying the election');
+        return;
+      }
+      toast.error(error.response.data.error);
+      return;
+    }
+  };
+
   return (
     <div className="flex flex-col w-full h-screen items-center justify-evenly">
       <Header title="Election Phase Management" />
@@ -139,6 +157,11 @@ function ElectionScreen() {
                 {getAdvanceText()}
               </button>
             }
+
+            {electionState === ElectionPhases.TALLYING ? 
+              <button onClick={handleTally} className="btn btn-secondary" id='advance-btn'>
+                End Election
+              </button> : null}
 
           </div>
         </div>
