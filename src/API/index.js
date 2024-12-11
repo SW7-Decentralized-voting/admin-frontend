@@ -18,3 +18,9 @@ export * from './pollingStationApi';
 
 // Login APIs
 export * from './loginApi';
+
+// Key APIs
+export * from './keyApi';
+
+// Tally APIs
+export * from './tallyApi';

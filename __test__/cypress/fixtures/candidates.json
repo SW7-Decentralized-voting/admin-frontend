@@ -1,0 +1,22 @@
+[
+	{
+		"name": "Bettina Bendtsen",
+		"party": "Nordlisten",
+		"nominationDistrict": "Banan-distriktet"
+	}, 
+	{
+		"name": "Fanny Findsen",
+		"party": "Sydlisten",
+		"nominationDistrict": "Banan-distriktet"
+	},
+	{
+		"name": "Henrik Hansen",
+		"party": "Vestpartiet",
+		"nominationDistrict": "Kakao-distriktet"
+	},
+	{
+		"name": "Mette Madsen",
+		"party": "Østpartiet",
+		"nominationDistrict": "Kakao-distriktet"
+	}
+]

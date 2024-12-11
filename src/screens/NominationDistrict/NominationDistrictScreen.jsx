@@ -21,12 +21,13 @@ function NominationDistrictScreen() {
       // eslint-disable-next-line no-console
       console.error(error);
       toast.error('Failed to fetch nomination districts.');
+      return [];
     }
   };
 
   useEffect(() => {
     fetchNominationDistricts().then((nominationDistricts) => {
-      if (nominationDistricts.length > 0) {
+      if (nominationDistricts || []) {
         setNominationDistricts(nominationDistricts);
       }
     });
